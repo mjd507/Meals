@@ -31,7 +31,7 @@ public class Swagger2Config {
     return new Docket(DocumentationType.SWAGGER_2)
         .apiInfo(apiInfo())
         .select()
-        .apis(RequestHandlerSelectors.basePackage("io.mjd507.controller"))
+        .apis(RequestHandlerSelectors.basePackage("io.mjd507"))
         .paths(PathSelectors.any())
         .build();
   }
