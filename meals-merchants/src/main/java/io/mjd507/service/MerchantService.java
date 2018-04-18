@@ -5,25 +5,23 @@
  * use it only in accordance with the terms of the license agreement you entered
  * into with Tuhu.cn
  */
-package io.mjd507.entity;
+package io.mjd507.service;
 
-import lombok.Getter;
-import lombok.Setter;
+import io.mjd507.entity.MerchantVo;
+import java.util.List;
 
 /**
- * 商家信息
- *
  * @author mjd
- * @date 2018/4/16 20:36
+ * @date 2018/4/18 19:22
  */
-@Setter
-@Getter
-public class MerchantVo {
+public interface MerchantService {
 
-  private int id;
-  private String name;
-  private String logoUrl;
-  private String desc;
-  private String location;
+  List<MerchantVo> getAllMerchants();
+
+  int addMerchant(MerchantVo merchantVo);
+
+  int updateMerchant(MerchantVo merchantVo);
+
+  int deleteMerchant(int merId);
 
 }

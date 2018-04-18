@@ -8,6 +8,7 @@
 package io.mjd507.service;
 
 import io.mjd507.entity.MealVo;
+import java.util.List;
 
 /**
  * @author mjd
@@ -21,4 +22,5 @@ public interface MealsService {
 
   int updateMeal(MealVo mealVo);
 
+  List<MealVo> getAllMeals();
 }

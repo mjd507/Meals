@@ -7,23 +7,10 @@
  */
 package io.mjd507.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
- * 商家信息
- *
  * @author mjd
- * @date 2018/4/16 20:36
+ * @date 2018/4/18 20:58
  */
-@Setter
-@Getter
-public class MerchantVo {
-
-  private int id;
-  private String name;
-  private String logoUrl;
-  private String desc;
-  private String location;
+public class MerchanterVo {
 
 }

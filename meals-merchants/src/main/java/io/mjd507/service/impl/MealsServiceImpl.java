@@ -9,6 +9,7 @@ package io.mjd507.service.impl;
 
 import io.mjd507.entity.MealVo;
 import io.mjd507.service.MealsService;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 /**
@@ -31,5 +32,10 @@ public class MealsServiceImpl implements MealsService {
   @Override
   public int updateMeal(MealVo mealVo) {
     return 0;
+  }
+
+  @Override
+  public List<MealVo> getAllMeals() {
+    return null;
   }
 }

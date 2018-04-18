@@ -33,4 +33,7 @@ public interface UserServiceMapper {
   @Delete({"DELETE FROM tb_user WHERE userId = #{userId}"})
   int deleteUserByUserId(String userId);
 
+  @Update({"UPDATE tb_user set isMerchanter = 1 WHERE userId = #{userId}"})
+  int setUserToMerchant(String userId); // 设置用户为商家
+
 }

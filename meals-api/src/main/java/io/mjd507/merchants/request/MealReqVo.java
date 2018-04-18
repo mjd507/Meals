@@ -5,25 +5,21 @@
  * use it only in accordance with the terms of the license agreement you entered
  * into with Tuhu.cn
  */
-package io.mjd507.entity;
+package io.mjd507.merchants.request;
 
+import io.mjd507.entity.MealVo;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 商家信息
- *
  * @author mjd
- * @date 2018/4/16 20:36
+ * @date 2018/4/18 20:35
  */
-@Setter
 @Getter
-public class MerchantVo {
+@Setter
+public class MealReqVo {
 
-  private int id;
-  private String name;
-  private String logoUrl;
-  private String desc;
-  private String location;
+  private int merchantId;
+  private MealVo mealVo;
 
 }

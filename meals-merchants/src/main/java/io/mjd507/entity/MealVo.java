@@ -20,11 +20,11 @@ import lombok.Setter;
 @Setter
 public class MealVo {
 
-  private int merchantId;
   private int mealId;
-  private String mealName;
-  private String mealPicUrl;
-  private String mealDesc;
-  private String mealPrice;
+  private int merchantId;
+  private String name;
+  private String picUrl;
+  private String desc;
+  private String price;
 
 }

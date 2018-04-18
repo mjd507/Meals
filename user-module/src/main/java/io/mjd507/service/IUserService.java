@@ -16,4 +16,6 @@ public interface IUserService {
 
   int deleteUserById(String userId);
 
+  int setUserToMerchant(String userId);
+
 }

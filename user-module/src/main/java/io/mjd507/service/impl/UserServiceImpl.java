@@ -35,4 +35,9 @@ public class UserServiceImpl implements IUserService {
   public int deleteUserById(String userId) {
     return userServiceMapper.deleteUserByUserId(userId);
   }
+
+  @Override
+  public int setUserToMerchant(String userId) {
+    return userServiceMapper.setUserToMerchant(userId);
+  }
 }
