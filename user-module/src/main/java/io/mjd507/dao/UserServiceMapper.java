@@ -25,15 +25,15 @@ public interface UserServiceMapper {
   UserVo findUserByUserId(String userId);
 
   @Update({
-      "UPDATE tb_user set (userName,nickName,phone,userAvatar,department,userGroup,isGroupLeader) "
+      "UPDATE tb_user set (userName,nickName,phone,avatar,department,userGroup,userType) "
           + "values (#{UserVo.userName},#{UserVo.nickName},#{UserVo.phone},#{UserVo.userAvatar},"
-          + "#{UserVo.department},#{UserVo.userGroup},#{UserVo.isGroupLeader}) WHERE userId = #{userId}"})
+          + "#{UserVo.department},#{UserVo.group},#{UserVo.userType}) WHERE userId = #{userId}"})
   int updateUserByUserId(@Param("UserVo") UserVo user, @Param("userId") String userId);
 
   @Delete({"DELETE FROM tb_user WHERE userId = #{userId}"})
   int deleteUserByUserId(String userId);
 
-  @Update({"UPDATE tb_user set isMerchanter = 1 WHERE userId = #{userId}"})
-  int setUserToMerchant(String userId); // 设置用户为商家
+  @Update({"UPDATE tb_user set userType = #{userType} WHERE userId = #{userId}"})
+  int setUserType(@Param("userId") String userId, @Param("userType") String userType); // 设置用户类型
 
 }

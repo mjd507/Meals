@@ -37,7 +37,7 @@ public class UserServiceImpl implements IUserService {
   }
 
   @Override
-  public int setUserToMerchant(String userId) {
-    return userServiceMapper.setUserToMerchant(userId);
+  public int setUserType(String userId, String userType) {
+    return userServiceMapper.setUserType(userId, userType);
   }
 }

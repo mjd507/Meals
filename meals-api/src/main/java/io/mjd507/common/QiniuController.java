@@ -7,7 +7,7 @@
  */
 package io.mjd507.common;
 
-import io.mjd507.base.DataResponse;
+import io.mjd507.common.request.DataResponse;
 import io.mjd507.common.request.QiniuTokenReq;
 import io.mjd507.qiuniu.QiniuUtils;
 import io.swagger.annotations.Api;

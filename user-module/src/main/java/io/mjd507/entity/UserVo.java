@@ -14,13 +14,10 @@ public class UserVo {
   private String userName;
   private String nickName;
   private String phone;
-  private String userAvatar;
+  private String avatar;
   private String department; // 研发，产品
   private String group; // Java, Js
-  private String isGroupLeader; // 小组长，有权限统计该组人数
-  private String openId; // 微信保留字段
-  private String isMerchanter; // 商家
-  private String isReviewer; // 审核者（审核商家入驻）
+  private String userType; // 用户类型：普通用户，商家，审核者，小组长
   private String createdAt;
   private String updatedAt;
 }

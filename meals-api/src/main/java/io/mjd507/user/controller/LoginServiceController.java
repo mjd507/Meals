@@ -1,6 +1,6 @@
 package io.mjd507.user.controller;
 
-import io.mjd507.base.DataResponse;
+import io.mjd507.common.request.DataResponse;
 import io.mjd507.entity.UserVo;
 import io.mjd507.service.impl.LoginServiceImpl;
 import io.mjd507.user.request.LoginReqVo;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Api(value = "LoginServiceController", description = "登录相关api")
 @RestController
-@RequestMapping(value = "meals")
+@RequestMapping(value = "user")
 public class LoginServiceController {
 
   @Autowired

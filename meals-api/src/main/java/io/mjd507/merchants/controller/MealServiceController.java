@@ -7,7 +7,7 @@
  */
 package io.mjd507.merchants.controller;
 
-import io.mjd507.base.DataResponse;
+import io.mjd507.common.request.DataResponse;
 import io.mjd507.entity.MerchantVo;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.RequestBody;

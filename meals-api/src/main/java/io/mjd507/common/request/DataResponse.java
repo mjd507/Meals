@@ -1,4 +1,4 @@
-package io.mjd507.base;
+package io.mjd507.common.request;
 
 /**
  * @author mjd
@@ -7,15 +7,21 @@ package io.mjd507.base;
 
 public class DataResponse<T> {
 
-  public static final String SUCCESS = "1";
+  private static final int SUCCESS = 1;
 
-  public static final String FAILURE = "0";
+  private static final int FAILURE = 0;
 
-  private String code;
+  private static final int AUTH_FAILURE = 401;
+
+  private int code;
 
   private T data;
 
   private String msg;
+
+  public DataResponse() {
+
+  }
 
   public DataResponse(T data) {
     this.code = SUCCESS;
@@ -23,16 +29,22 @@ public class DataResponse<T> {
     this.msg = "ok";
   }
 
-  public void setFailure(String msg){
+  public void setFailure(String msg) {
     this.code = FAILURE;
     this.msg = msg;
   }
 
-  public String getCode() {
+  public void setAuthFailure() {
+    this.code = AUTH_FAILURE;
+    this.msg = "Unauthorized";
+    this.data = null;
+  }
+
+  public int getCode() {
     return code;
   }
 
-  public void setCode(String code) {
+  public void setCode(int code) {
     this.code = code;
   }
 
