@@ -8,6 +8,7 @@ import io.mjd507.entity.LoginVo;
 import io.mjd507.entity.UserVo;
 import io.mjd507.entity.WeAppSession;
 import io.mjd507.service.ILoginService;
+import io.mjd507.service.IUserService;
 import io.mjd507.utils.TokenUtils;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,8 +18,7 @@ import org.springframework.stereotype.Service;
 /**
  * 登录模块服务的具体实现
  *
- * @author mjd
- * @date 2018/3/24 15:03
+ * Created by mjd on 2018/3/24 15:03
  */
 @Service
 public class LoginServiceImpl implements ILoginService {
@@ -27,7 +27,7 @@ public class LoginServiceImpl implements ILoginService {
   private LoginServiceMapper loginServiceMapper;
 
   @Autowired
-  private UserServiceImpl userService;
+  private IUserService userServiceMapper;
 
   @Override
   public UserVo loginByPhone(String phone, String verifyCode) {
@@ -54,7 +54,7 @@ public class LoginServiceImpl implements ILoginService {
     if (openId != null) { // 获取到微信用户
       LoginVo loginVo = loginServiceMapper.findUserIdByOpenId(openId);
       if (loginVo != null && loginVo.getUserId() != null) { // 用户存在
-        return userService.findUserById(loginVo.getUserId());
+        return userServiceMapper.findUserById(loginVo.getUserId());
       } else { //用户不存在，创建新用户
         // 根据 openId 生成 userId
         String userId = TokenUtils.buildUserId(openId);
@@ -64,11 +64,16 @@ public class LoginServiceImpl implements ILoginService {
         loginVo.setOpenId(openId);
         loginVo.setUserId(userId);
         loginServiceMapper.insertLoginVo(loginVo);
-        userService.addUser(user);
+        userServiceMapper.addUser(user);
         return user;
       }
     }
     return null;
+  }
+
+  @Override
+  public boolean deleteUserToken(String userId) {
+    return loginServiceMapper.deleteUserToken(userId) == 1;
   }
 
 }

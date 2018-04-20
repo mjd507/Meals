@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author mjd
- * @date 2018/3/25 18:57
+ * Created by mjd on 2018/3/25 18:57
  */
 @Api(value = "LoginServiceController", description = "登录相关api")
 @RestController

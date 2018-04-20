@@ -1,15 +1,11 @@
-/*
- * Copyright 2018 tuhu.cn All right reserved. This software is the
- * confidential and proprietary information of tuhu.cn ("Confidential
- * Information"). You shall not disclose such Confidential Information and shall
- * use it only in accordance with the terms of the license agreement you entered
- * into with Tuhu.cn
- */
 package io.mjd507.user.interceptor;
 
 import io.mjd507.GsonUtils;
+import io.mjd507.common.constants.Constants;
 import io.mjd507.common.request.DataResponse;
-import io.mjd507.service.impl.UserServiceImpl;
+import io.mjd507.entity.UserVo;
+import io.mjd507.service.IUserService;
+import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
@@ -18,31 +14,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
- * @author mjd
- * @date 2018/4/19 21:02
+ * Created by mjd on 2018/4/19 21:02
  */
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
   private static Logger logger = LoggerFactory.getLogger(LoginInterceptor.class);
 
   @Autowired
-  UserServiceImpl userService;
+  IUserService userService;
 
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
       throws Exception {
 
-    String authorization = request.getHeader("Authorization");
-    logger.info(authorization);
-    if (authorization != null && userService.findUserById(authorization) != null) {
-      request.setAttribute("Authorization",authorization);
-      return true;
+    String authorization = request.getHeader(Constants.USER_ATTR);
+    if (authorization != null) {
+      UserVo user = userService.findUserById(authorization);
+      if (user != null) {
+        request.setAttribute(Constants.USER_ATTR, user.getUserId());
+        return true;
+      } else {
+        authFailure(response);
+      }
     } else {
-      DataResponse responseData = new DataResponse<>();
-      responseData.setAuthFailure();
-      response.setContentType("application/json; charset=utf-8");
-      response.getWriter().write(GsonUtils.toJsonStr(responseData));
+      authFailure(response);
     }
     return false;
+  }
+
+  private void authFailure(HttpServletResponse response) throws IOException {
+    DataResponse responseData = new DataResponse<>();
+    responseData.setAuthFailure();
+    response.setContentType("application/json; charset=utf-8");
+    response.getWriter().write(GsonUtils.toJsonStr(responseData));
   }
 }

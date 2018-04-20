@@ -9,8 +9,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 /**
- * @author mjd
- * @date 2018/4/15 17:05
+ * Created by mjd on 2018/4/15 17:05
  */
 @Mapper
 public interface UserServiceMapper {
@@ -25,9 +24,10 @@ public interface UserServiceMapper {
   UserVo findUserByUserId(String userId);
 
   @Update({
-      "UPDATE tb_user set (userName,nickName,phone,avatar,department,userGroup,userType) "
-          + "values (#{UserVo.userName},#{UserVo.nickName},#{UserVo.phone},#{UserVo.userAvatar},"
-          + "#{UserVo.department},#{UserVo.group},#{UserVo.userType}) WHERE userId = #{userId}"})
+      "UPDATE tb_user set userName=#{UserVo.userName},nickName=#{UserVo.nickName},"
+          + "phone=#{UserVo.phone},avatar=#{UserVo.avatar},department=#{UserVo.department},"
+          + "userGroup=#{UserVo.group},userType=#{UserVo.userType},updatedAt=now() "
+          + "WHERE userId = #{userId}"})
   int updateUserByUserId(@Param("UserVo") UserVo user, @Param("userId") String userId);
 
   @Delete({"DELETE FROM tb_user WHERE userId = #{userId}"})

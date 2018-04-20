@@ -1,11 +1,4 @@
-/*
- * Copyright 2018 tuhu.cn All right reserved. This software is the
- * confidential and proprietary information of tuhu.cn ("Confidential
- * Information"). You shall not disclose such Confidential Information and shall
- * use it only in accordance with the terms of the license agreement you entered
- * into with Tuhu.cn
- */
-package io.mjd507.common;
+package io.mjd507.common.controller;
 
 import io.mjd507.common.request.DataResponse;
 import io.mjd507.common.request.QiniuTokenReq;
@@ -22,8 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author mjd
- * @date 2018/4/17 20:52
+ * Created by mjd on 2018/4/17 20:52
  */
 @Api(value = "QiniuController", description = "七牛云相关API")
 @RestController

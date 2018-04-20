@@ -1,10 +1,8 @@
 package io.mjd507.common.request;
 
 /**
- * @author mjd
- * @date 2018/3/25 18:44
+ * Created by mjd on 2018/3/25 18:44
  */
-
 public class DataResponse<T> {
 
   private static final int SUCCESS = 1;

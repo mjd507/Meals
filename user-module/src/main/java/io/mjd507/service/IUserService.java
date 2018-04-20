@@ -3,19 +3,18 @@ package io.mjd507.service;
 import io.mjd507.entity.UserVo;
 
 /**
- * @author mjd
- * @date: 2018/3/24 13:37
+ * Created by mjd on 2018/3/24 13:37
  */
 public interface IUserService {
 
   UserVo findUserById(String userId);
 
-  int updateUserById(String userId, UserVo userVo);
+  boolean updateUserById(String userId, UserVo userVo);
 
-  int addUser(UserVo userVo);
+  boolean addUser(UserVo userVo);
 
-  int deleteUserById(String userId);
+  boolean deleteUserById(String userId);
 
-  int setUserType(String userId, String userType);
+  boolean setUserType(String userId, String userType);
 
 }

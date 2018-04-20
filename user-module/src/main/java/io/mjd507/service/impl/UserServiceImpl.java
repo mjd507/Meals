@@ -7,8 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * @author mjd
- * @date 2018/4/15 17:08
+ * Created by mjd on 2018/4/15 17:08
  */
 @Service
 public class UserServiceImpl implements IUserService {
@@ -22,22 +21,22 @@ public class UserServiceImpl implements IUserService {
   }
 
   @Override
-  public int updateUserById(String userId, UserVo userVo) {
-    return userServiceMapper.updateUserByUserId(userVo, userId);
+  public boolean updateUserById(String userId, UserVo userVo) {
+    return userServiceMapper.updateUserByUserId(userVo, userId) == 1;
   }
 
   @Override
-  public int addUser(UserVo userVo) {
-    return userServiceMapper.addUser(userVo);
+  public boolean addUser(UserVo userVo) {
+    return userServiceMapper.addUser(userVo) == 1;
   }
 
   @Override
-  public int deleteUserById(String userId) {
-    return userServiceMapper.deleteUserByUserId(userId);
+  public boolean deleteUserById(String userId) {
+    return userServiceMapper.deleteUserByUserId(userId) == 1;
   }
 
   @Override
-  public int setUserType(String userId, String userType) {
-    return userServiceMapper.setUserType(userId, userType);
+  public boolean setUserType(String userId, String userType) {
+    return userServiceMapper.setUserType(userId, userType) == 1;
   }
 }
