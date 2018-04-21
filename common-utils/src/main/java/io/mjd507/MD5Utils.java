@@ -3,8 +3,7 @@ package io.mjd507;
 import java.security.MessageDigest;
 
 /**
- * @author mjd
- * @date 2018/4/2 19:58
+ * Created by mjd on 2018/4/2 19:58
  */
 public class MD5Utils {
 

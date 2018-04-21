@@ -1,10 +1,3 @@
-/*
- * Copyright 2018 tuhu.cn All right reserved. This software is the
- * confidential and proprietary information of tuhu.cn ("Confidential
- * Information"). You shall not disclose such Confidential Information and shall
- * use it only in accordance with the terms of the license agreement you entered
- * into with Tuhu.cn
- */
 package io.mjd507.qiuniu;
 
 import com.qiniu.common.QiniuException;
@@ -21,8 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * 七牛相关工具类
  *
- * @author mjd
- * @date 2018/4/17 20:23
+ * Created by mjd on 2018/3/25 11:19
  */
 public class QiniuUtils {
 

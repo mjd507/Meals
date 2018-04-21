@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * HTTP 请求
- *
- * @author mjd
- * @date 2018/3/24 23:11
+ * Created by mjd on 2018/3/24 23:11
  */
 @Setter
 @Getter

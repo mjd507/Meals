@@ -14,8 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author mjd
- * @date 2018/3/30 16:50
+ * Created by mjd on 2018/3/30 16:50
  */
 public class HttpUtils {
 

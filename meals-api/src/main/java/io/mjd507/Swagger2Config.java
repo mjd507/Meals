@@ -1,10 +1,3 @@
-/*
- * Copyright 2018 tuhu.cn All right reserved. This software is the
- * confidential and proprietary information of tuhu.cn ("Confidential
- * Information"). You shall not disclose such Confidential Information and shall
- * use it only in accordance with the terms of the license agreement you entered
- * into with Tuhu.cn
- */
 package io.mjd507;
 
 import org.springframework.context.annotation.Bean;
@@ -18,8 +11,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
- * @author mjd
- * @date 2018/4/16 19:25
+ * Created by mjd on 2018/4/16 19:25
  */
 @Configuration
 @EnableSwagger2

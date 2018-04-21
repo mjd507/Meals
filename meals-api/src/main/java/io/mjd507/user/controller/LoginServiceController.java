@@ -2,7 +2,7 @@ package io.mjd507.user.controller;
 
 import io.mjd507.common.request.DataResponse;
 import io.mjd507.entity.UserVo;
-import io.mjd507.service.impl.LoginServiceImpl;
+import io.mjd507.service.impl.UserLoginServiceImpl;
 import io.mjd507.user.request.LoginReqVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,11 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Api(value = "LoginServiceController", description = "登录相关api")
 @RestController
-@RequestMapping(value = "user")
 public class LoginServiceController {
 
   @Autowired
-  private LoginServiceImpl loginService;
+  private UserLoginServiceImpl loginService;
 
   @ApiOperation(value = "微信小程序登录", notes = "使用小程序 code 登录，如果用户不存在则创建后登陆，存在则直接登陆，"
       + "成功后返回 UserVo 对象，里面有 userId 字段，放在 header 的 access-token 中，用于后续验证")

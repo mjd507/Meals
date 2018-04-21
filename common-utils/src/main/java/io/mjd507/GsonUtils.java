@@ -10,8 +10,7 @@ import java.util.List;
 /**
  * bean 和 json 转换工具类
  *
- * @author mjd
- * @date 2018/3/25 11:19
+ * Created by mjd on 2018/3/25 11:19
  */
 public class GsonUtils {
 

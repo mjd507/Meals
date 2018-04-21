@@ -11,9 +11,10 @@
 	<modules>
 		<module>meals-api</module>
 		<module>common-utils</module>
-		<module>user-module</module>
-		<module>meals-merchants</module>
-	</modules>
+		<module>merchant-api</module>
+		<module>merchant-service</module>
+    <module>user-service</module>
+  </modules>
 
 	<name>meals</name>
 	<description>make it easier to order meals</description>
