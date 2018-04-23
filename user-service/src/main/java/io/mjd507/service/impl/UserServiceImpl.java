@@ -21,6 +21,11 @@ public class UserServiceImpl implements IUserService<UserVo> {
   }
 
   @Override
+  public UserVo findUserByPhone(String phone) {
+    return userServiceMapper.findUserByPhone(phone);
+  }
+
+  @Override
   public boolean updateUserById(String userId, UserVo userVo) {
     return userServiceMapper.updateUserByUserId(userVo, userId) == 1;
   }

@@ -33,6 +33,9 @@ public class MerchantsServiceController extends MerchantUserAttrSetter {
     if (isVaild) {
       merchantVo.setMerchantId("MER");
       merchantService.addMerchant(merchantVo);
+    } else {
+      response = new DataResponse<>();
+      response.setFailure("请补全商户名称等信息");
     }
 
     List<MerchantMetaVo> waitActiveMerchant = merchantService.findWaitActiveMerchant();

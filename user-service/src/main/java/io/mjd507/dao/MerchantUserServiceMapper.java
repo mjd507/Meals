@@ -14,22 +14,25 @@ import org.apache.ibatis.annotations.Update;
 @Mapper
 public interface MerchantUserServiceMapper {
 
-  @Insert({"INSERT INTO tb_merchant_user (userId) VALUES (#{UserVo.userId})"})
+  @Insert({"INSERT INTO tb_user (userId) VALUES (#{UserVo.userId})"})
   int addUser(@Param("UserVo") MerchantUserVo user);
 
   /**
    * 一个参数可以不加 @Param("")
    */
-  @Select({"SELECT * FROM tb_merchant_user WHERE userId = #{userId}"})
+  @Select({"SELECT * FROM tb_user WHERE userId = #{userId}"})
   MerchantUserVo findUserByUserId(String userId);
 
+  @Select({"SELECT * FROM tb_user WHERE phone = #{phone}"})
+  MerchantUserVo findUserByPhone(String phone);
+
   @Update({
-      "UPDATE tb_merchant_user set userName=#{UserVo.userName},nickName=#{UserVo.nickName},"
+      "UPDATE tb_user set userName=#{UserVo.userName},nickName=#{UserVo.nickName},"
           + "phone=#{UserVo.phone},avatar=#{UserVo.avatar},updatedAt=now() "
           + "WHERE userId = #{userId}"})
   int updateUserByUserId(@Param("UserVo") MerchantUserVo user, @Param("userId") String userId);
 
-  @Delete({"DELETE FROM tb_merchant_user WHERE userId = #{userId}"})
+  @Delete({"DELETE FROM tb_user WHERE userId = #{userId}"})
   int deleteUserByUserId(String userId);
 
 }

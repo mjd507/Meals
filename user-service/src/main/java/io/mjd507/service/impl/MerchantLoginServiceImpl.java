@@ -5,6 +5,7 @@ import io.mjd507.entity.LoginVo;
 import io.mjd507.entity.MerchantUserVo;
 import io.mjd507.entity.WeAppSession;
 import io.mjd507.service.ILoginService;
+import io.mjd507.sms.SmsService;
 import io.mjd507.utils.LoginUtils;
 import io.mjd507.utils.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,29 @@ public class MerchantLoginServiceImpl implements ILoginService<MerchantUserVo> {
   @Autowired
   private MerchantUserServiceImpl userService;
 
+  @Autowired
+  private SmsService smsService;
+
   @Override
   public MerchantUserVo loginByPhone(String phone, String verifyCode) {
+    boolean validSuccess = smsService.hasPhoneAndCode(phone, verifyCode);
+    // 短信验证通过
+    if (validSuccess) {
+      MerchantUserVo userByPhone = userService.findUserByPhone(phone);
+      if (userByPhone != null && userByPhone.getUserId() != null) { // 用户存在
+        return userByPhone;
+      } else {
+        String userId = TokenUtils.buildUserId(phone);
+        MerchantUserVo user = new MerchantUserVo();
+        user.setUserId(userId);
+        LoginVo loginVo = new LoginVo();
+        loginVo.setUserId(userId);
+        loginVo.setPhone(phone);
+        loginServiceMapper.insertLoginVo(loginVo);
+        userService.addUser(user);
+        return user;
+      }
+    }
     return null;
   }
 

@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.Update;
  * Created by mjd on 2018/4/15 17:05
  */
 @Mapper
-public interface UserServiceMapper<T> {
+public interface UserServiceMapper {
 
   @Insert({"INSERT INTO tb_user (userId) VALUES (#{UserVo.userId})"})
   int addUser(@Param("UserVo") UserVo user);
@@ -22,6 +22,9 @@ public interface UserServiceMapper<T> {
    */
   @Select({"SELECT * FROM tb_user WHERE userId = #{userId}"})
   UserVo findUserByUserId(String userId);
+
+  @Select({"SELECT * FROM tb_user WHERE phone = #{phone}"})
+  UserVo findUserByPhone(String phone);
 
   @Update({
       "UPDATE tb_user set userName=#{UserVo.userName},nickName=#{UserVo.nickName},"

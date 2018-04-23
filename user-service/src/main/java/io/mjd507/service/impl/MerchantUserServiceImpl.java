@@ -21,6 +21,11 @@ public class MerchantUserServiceImpl implements IUserService<MerchantUserVo> {
   }
 
   @Override
+  public MerchantUserVo findUserByPhone(String phone) {
+    return userServiceMapper.findUserByPhone(phone);
+  }
+
+  @Override
   public boolean updateUserById(String userId, MerchantUserVo userVo) {
     return userServiceMapper.updateUserByUserId(userVo, userId) == 1;
   }
