@@ -29,7 +29,7 @@ public class MerchantUserServiceController extends MerchantUserAttrSetter {
   @Autowired
   MerchantLoginServiceImpl merchantLoginService;
 
-  @ApiOperation(value = "更新用户信息", notes = "全字段更新，不要传空覆盖原有值")
+  @ApiOperation(value = "更新用户信息", notes = "全字段更新，不要传空覆盖原有值，手机号暂不支持修改")
   @ResponseBody
   @RequestMapping(value = "updateUser", method = RequestMethod.POST)
   public DataResponse<String> updateUser(@ModelAttribute(Constants.USER_ATTR) MerchantUserVo user,

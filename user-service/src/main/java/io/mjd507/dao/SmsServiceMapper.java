@@ -24,4 +24,7 @@ public interface SmsServiceMapper {
 
   @Select({"SELECT * FROM tb_verifyCode WHERE phone = #{phone} AND verifyCode = #{verifyCode}"})
   PhoneCodeVo findValidSign(@Param("phone") String phone, @Param("verifyCode") String verifyCode);
+
+  @Select({"SELECT * FROM tb_verifyCode WHERE phone = #{phone}"})
+  PhoneCodeVo findPhone(@Param("phone") String phone);
 }

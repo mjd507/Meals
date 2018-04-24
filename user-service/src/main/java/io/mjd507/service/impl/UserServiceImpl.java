@@ -40,7 +40,6 @@ public class UserServiceImpl implements IUserService<UserVo> {
     return userServiceMapper.deleteUserByUserId(userId) == 1;
   }
 
-  @Override
   public boolean setUserType(String userId, String userType) {
     return userServiceMapper.setUserType(userId, userType) == 1;
   }

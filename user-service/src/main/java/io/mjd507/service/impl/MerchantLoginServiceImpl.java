@@ -38,6 +38,7 @@ public class MerchantLoginServiceImpl implements ILoginService<MerchantUserVo> {
         String userId = TokenUtils.buildUserId(phone);
         MerchantUserVo user = new MerchantUserVo();
         user.setUserId(userId);
+        user.setPhone(phone);
         LoginVo loginVo = new LoginVo();
         loginVo.setUserId(userId);
         loginVo.setPhone(phone);

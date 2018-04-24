@@ -14,8 +14,8 @@ public class MerchantMetaVo {
 
   private String merchantId;
   private String name;
-  private String logoUrl;
+  private String logo;
   private String desc;
   private String location;
-
+  private String isActive;
 }

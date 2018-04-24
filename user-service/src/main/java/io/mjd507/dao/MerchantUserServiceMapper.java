@@ -14,7 +14,7 @@ import org.apache.ibatis.annotations.Update;
 @Mapper
 public interface MerchantUserServiceMapper {
 
-  @Insert({"INSERT INTO tb_user (userId) VALUES (#{UserVo.userId})"})
+  @Insert({"INSERT INTO tb_user (userId,phone) VALUES (#{UserVo.userId}, #{UserVo.phone})"})
   int addUser(@Param("UserVo") MerchantUserVo user);
 
   /**
@@ -28,11 +28,15 @@ public interface MerchantUserServiceMapper {
 
   @Update({
       "UPDATE tb_user set userName=#{UserVo.userName},nickName=#{UserVo.nickName},"
-          + "phone=#{UserVo.phone},avatar=#{UserVo.avatar},updatedAt=now() "
+          + "avatar=#{UserVo.avatar},updatedAt=now() "
           + "WHERE userId = #{userId}"})
   int updateUserByUserId(@Param("UserVo") MerchantUserVo user, @Param("userId") String userId);
 
   @Delete({"DELETE FROM tb_user WHERE userId = #{userId}"})
   int deleteUserByUserId(String userId);
+
+  @Update({
+      "UPDATE tb_user set isActive=#{status} WHERE userId = #{userId}"})
+  int setUserActiveStatus(@Param("status") String status, @Param("userId") String userId);
 
 }

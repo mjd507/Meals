@@ -17,6 +17,4 @@ public interface IUserService<T> {
 
   boolean deleteUserById(String userId);
 
-  boolean setUserType(String userId, String userType);
-
 }

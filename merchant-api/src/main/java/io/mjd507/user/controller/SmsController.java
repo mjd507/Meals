@@ -4,6 +4,8 @@ import io.mjd507.common.request.DataResponse;
 import io.mjd507.sms.SmsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -15,7 +17,8 @@ public class SmsController {
   @Autowired
   SmsService smsService;
 
-  @RequestMapping(value = "sendSms")
+  @RequestMapping(value = "sendSms", method = RequestMethod.POST)
+  @ResponseBody
   public DataResponse<String> sendSms(String phone) {
     String result = smsService.sendSms(phone);
     return new DataResponse<>(result);

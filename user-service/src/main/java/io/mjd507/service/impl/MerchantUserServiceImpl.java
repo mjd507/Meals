@@ -40,8 +40,8 @@ public class MerchantUserServiceImpl implements IUserService<MerchantUserVo> {
     return userServiceMapper.deleteUserByUserId(userId) == 1;
   }
 
-  @Override
-  public boolean setUserType(String userId, String userType) {
-    return userServiceMapper.deleteUserByUserId(userId) == 1;
+  public boolean setUserActiveStatus(String userId, String status) {
+    return userServiceMapper.setUserActiveStatus(status, userId) == 1;
   }
+
 }
