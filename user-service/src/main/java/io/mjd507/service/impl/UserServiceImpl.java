@@ -26,8 +26,8 @@ public class UserServiceImpl implements IUserService<UserVo> {
   }
 
   @Override
-  public boolean updateUserById(String userId, UserVo userVo) {
-    return userServiceMapper.updateUserByUserId(userVo, userId) == 1;
+  public boolean updateUserById(UserVo userVo) {
+    return userServiceMapper.updateUserByUserId(userVo) == 1;
   }
 
   @Override

@@ -43,7 +43,8 @@ public class UserServiceController extends UserAttrSetter {
   @RequestMapping(value = "updateUser", method = RequestMethod.POST)
   public DataResponse<String> updateUser(@ModelAttribute(Constants.USER_ATTR) UserVo user,
       @RequestBody UserVo userVo) {
-    boolean success = userService.updateUserById(user.getUserId(), userVo);
+    userVo.setUserId(user.getUserId());
+    boolean success = userService.updateUserById(userVo);
     return new DataResponse<>(success ? "更新成功" : "更新失败");
   }
 

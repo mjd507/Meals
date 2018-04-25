@@ -37,7 +37,7 @@ public class MerchantServiceImpl implements MerchantService {
   }
 
   @Override
-  public boolean deleteMerchant(int merId) {
+  public boolean deleteMerchant(String merId) {
     return merchantServiceMapper.deleteMerchant(merId) == 1;
   }
 

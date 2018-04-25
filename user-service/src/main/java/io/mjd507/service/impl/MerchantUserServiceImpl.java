@@ -26,8 +26,8 @@ public class MerchantUserServiceImpl implements IUserService<MerchantUserVo> {
   }
 
   @Override
-  public boolean updateUserById(String userId, MerchantUserVo userVo) {
-    return userServiceMapper.updateUserByUserId(userVo, userId) == 1;
+  public boolean updateUserById(MerchantUserVo userVo) {
+    return userServiceMapper.updateUserByUserId(userVo) == 1;
   }
 
   @Override
@@ -38,10 +38,6 @@ public class MerchantUserServiceImpl implements IUserService<MerchantUserVo> {
   @Override
   public boolean deleteUserById(String userId) {
     return userServiceMapper.deleteUserByUserId(userId) == 1;
-  }
-
-  public boolean setUserActiveStatus(String userId, String status) {
-    return userServiceMapper.setUserActiveStatus(status, userId) == 1;
   }
 
 }

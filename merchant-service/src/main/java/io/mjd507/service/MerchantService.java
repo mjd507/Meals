@@ -14,11 +14,12 @@ public interface MerchantService {
 
   boolean activeMerchant(String merchantId);
 
+  // 商家自己调用
   boolean addMerchant(MerchantMetaVo merchantVo);
 
   boolean updateMerchant(MerchantMetaVo merchantVo);
 
-  boolean deleteMerchant(int merchantId);
+  boolean deleteMerchant(String merchantId);
 
   // 给用户调用
 

@@ -30,8 +30,8 @@ public interface UserServiceMapper {
       "UPDATE tb_user set userName=#{UserVo.userName},nickName=#{UserVo.nickName},"
           + "phone=#{UserVo.phone},avatar=#{UserVo.avatar},department=#{UserVo.department},"
           + "userGroup=#{UserVo.group},userType=#{UserVo.userType},updatedAt=now() "
-          + "WHERE userId = #{userId}"})
-  int updateUserByUserId(@Param("UserVo") UserVo user, @Param("userId") String userId);
+          + "WHERE userId = #{UserVo.userId}"})
+  int updateUserByUserId(@Param("UserVo") UserVo user);
 
   @Delete({"DELETE FROM tb_user WHERE userId = #{userId}"})
   int deleteUserByUserId(String userId);

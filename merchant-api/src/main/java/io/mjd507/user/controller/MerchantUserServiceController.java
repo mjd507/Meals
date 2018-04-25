@@ -34,7 +34,8 @@ public class MerchantUserServiceController extends MerchantUserAttrSetter {
   @RequestMapping(value = "updateUser", method = RequestMethod.POST)
   public DataResponse<String> updateUser(@ModelAttribute(Constants.USER_ATTR) MerchantUserVo user,
       @RequestBody MerchantUserVo userVo) {
-    boolean success = merchantUserService.updateUserById(user.getUserId(), userVo);
+    userVo.setUserId(user.getUserId());
+    boolean success = merchantUserService.updateUserById(userVo);
     return new DataResponse<>(success ? "更新成功" : "更新失败");
   }
 

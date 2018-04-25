@@ -29,14 +29,10 @@ public interface MerchantUserServiceMapper {
   @Update({
       "UPDATE tb_user set userName=#{UserVo.userName},nickName=#{UserVo.nickName},"
           + "avatar=#{UserVo.avatar},updatedAt=now() "
-          + "WHERE userId = #{userId}"})
-  int updateUserByUserId(@Param("UserVo") MerchantUserVo user, @Param("userId") String userId);
+          + "WHERE userId = #{UserVo.userId}"})
+  int updateUserByUserId(@Param("UserVo") MerchantUserVo user);
 
   @Delete({"DELETE FROM tb_user WHERE userId = #{userId}"})
   int deleteUserByUserId(String userId);
-
-  @Update({
-      "UPDATE tb_user set isActive=#{status} WHERE userId = #{userId}"})
-  int setUserActiveStatus(@Param("status") String status, @Param("userId") String userId);
 
 }

@@ -27,9 +27,6 @@ public class MerchantsServiceController extends MerchantUserAttrSetter {
   @Autowired
   MerchantService merchantService;
 
-  @Autowired
-  MerchantUserServiceImpl userService;
-
   @ApiOperation(value = "申请成为商家")
   @ResponseBody
   @RequestMapping(value = "applyMerchant", method = RequestMethod.POST)
@@ -41,7 +38,6 @@ public class MerchantsServiceController extends MerchantUserAttrSetter {
     if (isVaild) {
       merchantVo.setMerchantId("MER" + user.getUserId());
       merchantService.addMerchant(merchantVo);
-      userService.setUserActiveStatus(user.getUserId(), "2");
       response = new DataResponse<>("申请成功，一般两天内给出审核结果");
     } else {
       response = new DataResponse<>();
@@ -53,4 +49,34 @@ public class MerchantsServiceController extends MerchantUserAttrSetter {
   private boolean vaildMerchant(MerchantMetaVo merchantVo) {
     return !StringUtils.isEmpty(merchantVo.getName());
   }
+
+  @ApiOperation(value = "删除商家", notes = "删除接入的商家")
+  @ResponseBody
+  @RequestMapping(value = "deleteMerchant", method = RequestMethod.POST)
+  public DataResponse<String> deleteMerchant(String merchantId) {
+    boolean i = merchantService.deleteMerchant(merchantId);
+    String data = i ? "删除成功" : "删除失败";
+    return new DataResponse<>(data);
+  }
+
+  @ApiOperation(value = "修改商家", notes = "修改接入的商家信息")
+  @ResponseBody
+  @RequestMapping(value = "modifyMerchant", method = RequestMethod.POST)
+  public DataResponse<String> modifyMerchant(
+      @ModelAttribute(Constants.USER_ATTR) MerchantUserVo user,
+      @RequestBody MerchantMetaVo merchantVo) {
+    merchantVo.setMerchantId("MER" + user.getUserId());
+    boolean i = merchantService.updateMerchant(merchantVo);
+    String data = i ? "修改成功" : "修改失败";
+    return new DataResponse<>(data);
+  }
+
+  @ApiOperation(value = "商家列表", notes = "查看所有商家列表")
+  @ResponseBody
+  @RequestMapping(value = "getMerchantList", method = RequestMethod.GET)
+  public DataResponse<List<MerchantMetaVo>> getMerchantList() {
+    List<MerchantMetaVo> allMerchants = merchantService.getAllMerchants();
+    return new DataResponse<>(allMerchants);
+  }
+
 }

@@ -11,7 +11,7 @@ public interface IUserService<T> {
 
   T findUserByPhone(String phone);
 
-  boolean updateUserById(String userId, T userVo);
+  boolean updateUserById(T userVo);
 
   boolean addUser(T userVo);
 

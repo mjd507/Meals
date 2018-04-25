@@ -24,17 +24,17 @@ public interface MerchantServiceMapper {
       + "(#{MerchantVo.merchantId},#{MerchantVo.name},#{MerchantVo.logo},#{MerchantVo.desc},#{MerchantVo.location},now(),now())"})
   int addMerchant(@Param("MerchantVo") MerchantMetaVo merchantVo);
 
-  @Update({"UPDATE tb_merchant_meta set (name,logo,desc,location,updateAt) VALUES (#{MerchantVo.name},"
-      + "#{MerchantVo.logo},#{MerchantVo.desc},#{MerchantVo.location},now()) WHERE merchantId = #{MerchantVo.merchantId}"})
+  @Update({"UPDATE tb_merchant_meta set `name` = #{MerchantVo.name},`logo` = #{MerchantVo.logo}, `desc` = #{MerchantVo.desc},"
+      + "`location` = #{MerchantVo.location}, `updateAt` = now() WHERE merchantId = #{MerchantVo.merchantId}"})
   int updateMerchant(@Param("MerchantVo") MerchantMetaVo merchantVo);
 
   @Delete({"DELETE FROM tb_merchant_meta WHERE merchantId = #{merchantId}"})
-  int deleteMerchant(int merchantId);
+  int deleteMerchant(String merchantId);
 
   @Select({"SELECT * FROM tb_merchant_meta WHERE isActive = '2'"})
   List<MerchantMetaVo> findWaitActiveMerchant();
 
-  @Update({"UPDATE tb_merchant_meta set isActive = 1 WHERE merchantId = #{merchantId}"})
+  @Update({"UPDATE tb_merchant_meta set isActive = '1' WHERE merchantId = #{merchantId}"})
   int activeMerchant(String merchantId);
 
 }
