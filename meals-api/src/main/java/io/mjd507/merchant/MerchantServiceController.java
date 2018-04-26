@@ -20,12 +20,8 @@ public class MerchantServiceController extends UserAttrSetter {
   @ResponseBody
   @RequestMapping(value = "getMerchantList", method = RequestMethod.GET)
   public DataResponse<List<MerchantVo>> getMerchantList() {
+
     return null;
-  }
-
-
-  private boolean isReviewer(UserVo userVo) {
-    return userVo != null && userVo.getUserType().equals("reviewer");
   }
 
 }

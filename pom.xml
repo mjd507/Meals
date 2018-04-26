@@ -14,6 +14,7 @@
 		<module>merchant-api</module>
 		<module>merchant-service</module>
     <module>user-service</module>
+    <module>meals-service</module>
   </modules>
 
 	<name>meals</name>
@@ -118,6 +119,13 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

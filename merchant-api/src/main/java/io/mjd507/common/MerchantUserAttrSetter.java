@@ -2,7 +2,6 @@ package io.mjd507.common;
 
 import io.mjd507.common.constants.Constants;
 import io.mjd507.entity.MerchantUserVo;
-import io.mjd507.entity.UserVo;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
