@@ -31,6 +31,7 @@ public class LoginInterceptorConfig extends WebMvcConfigurationSupport {
     merExclude.add("/loginByPhone");
     merExclude.add("/sendSms");
     merExclude.add("/reviewer/**");
+    merExclude.add("/api/**");
     registry.addInterceptor(loginInterceptor())
         .addPathPatterns("/**")
         .excludePathPatterns(merExclude)

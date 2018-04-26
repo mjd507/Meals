@@ -17,7 +17,7 @@ import org.apache.ibatis.annotations.Update;
 @Mapper
 public interface MerchantServiceMapper {
 
-  @Select({"SELECT * FROM tb_merchant_meta"})
+  @Select({"SELECT * FROM tb_merchant_meta WHERE isActive = '1'"})
   List<MerchantMetaVo> getAllMerchants();
 
   @Insert({"INSERT INTO tb_merchant_meta (merchantId,name,logo,`desc`,location,createAt,updateAt) VALUES "

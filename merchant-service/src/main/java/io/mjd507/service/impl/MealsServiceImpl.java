@@ -1,8 +1,10 @@
 package io.mjd507.service.impl;
 
+import io.mjd507.dao.MealsServiceMapper;
 import io.mjd507.service.MealsService;
 import io.mjd507.entity.MealVo;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,23 +13,26 @@ import org.springframework.stereotype.Service;
 @Service
 public class MealsServiceImpl implements MealsService {
 
+  @Autowired
+  MealsServiceMapper mealsService;
+
   @Override
-  public int addMeal(MealVo mealVo) {
-    return 0;
+  public boolean addMeal(MealVo mealVo) {
+    return mealsService.addMeal(mealVo) == 1;
   }
 
   @Override
-  public int delMeal(MealVo mealVo) {
-    return 0;
+  public boolean delMeal(String mealId) {
+    return mealsService.deleteMeal(mealId) == 1;
   }
 
   @Override
-  public int updateMeal(MealVo mealVo) {
-    return 0;
+  public boolean updateMeal(MealVo mealVo) {
+    return mealsService.updateMeal(mealVo) == 1;
   }
 
   @Override
-  public List<MealVo> getAllMeals() {
-    return null;
+  public List<MealVo> getMealsByMerchant(String merchantId) {
+    return mealsService.getMealsByMerchant(merchantId);
   }
 }

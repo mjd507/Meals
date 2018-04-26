@@ -10,10 +10,10 @@ import lombok.Setter;
 @Setter
 public class MealVo {
 
-  private int mealId;
-  private int merchantId;
+  private String id;
+  private String merchantId;
   private String name;
-  private String picUrl;
+  private String pic;
   private String desc;
   private String price;
 

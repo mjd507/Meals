@@ -8,11 +8,11 @@ import java.util.List;
  */
 public interface MealsService {
 
-  int addMeal(MealVo mealVo);
+  boolean addMeal(MealVo mealVo);
 
-  int delMeal(MealVo mealVo);
+  boolean delMeal(String mealId);
 
-  int updateMeal(MealVo mealVo);
+  boolean updateMeal(MealVo mealVo);
 
-  List<MealVo> getAllMeals();
+  List<MealVo> getMealsByMerchant(String merchantId);
 }

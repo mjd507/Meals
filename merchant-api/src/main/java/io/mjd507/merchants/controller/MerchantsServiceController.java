@@ -53,8 +53,8 @@ public class MerchantsServiceController extends MerchantUserAttrSetter {
   @ApiOperation(value = "删除商家", notes = "删除接入的商家")
   @ResponseBody
   @RequestMapping(value = "deleteMerchant", method = RequestMethod.POST)
-  public DataResponse<String> deleteMerchant(String merchantId) {
-    boolean i = merchantService.deleteMerchant(merchantId);
+  public DataResponse<String> deleteMerchant(@ModelAttribute(Constants.USER_ATTR) MerchantUserVo user) {
+    boolean i = merchantService.deleteMerchant("MER" + user.getUserId());
     String data = i ? "删除成功" : "删除失败";
     return new DataResponse<>(data);
   }
@@ -71,12 +71,5 @@ public class MerchantsServiceController extends MerchantUserAttrSetter {
     return new DataResponse<>(data);
   }
 
-  @ApiOperation(value = "商家列表", notes = "查看所有商家列表")
-  @ResponseBody
-  @RequestMapping(value = "getMerchantList", method = RequestMethod.GET)
-  public DataResponse<List<MerchantMetaVo>> getMerchantList() {
-    List<MerchantMetaVo> allMerchants = merchantService.getAllMerchants();
-    return new DataResponse<>(allMerchants);
-  }
 
 }
