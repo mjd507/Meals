@@ -24,6 +24,9 @@ public class GsonUtils {
   }
 
   public static <T> T toBean(String jsonStr, Class<T> clazz) {
+    if(clazz == String.class){
+      return (T) jsonStr;
+    }
     return gson.fromJson(jsonStr, clazz);
   }
 
