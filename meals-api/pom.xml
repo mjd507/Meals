@@ -11,6 +11,10 @@
 
   <artifactId>meals-api</artifactId>
 
+  <properties>
+    <skipTests>true</skipTests>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>io.mjd507</groupId>
@@ -55,9 +59,9 @@
     </dependency>
     <!--读取自定义配置-->
     <!--<dependency>-->
-      <!--<groupId>org.springframework.boot</groupId>-->
-      <!--<artifactId>spring-boot-configuration-processor</artifactId>-->
-      <!--<optional>true</optional>-->
+    <!--<groupId>org.springframework.boot</groupId>-->
+    <!--<artifactId>spring-boot-configuration-processor</artifactId>-->
+    <!--<optional>true</optional>-->
     <!--</dependency>-->
     <dependency>
       <groupId>io.springfox</groupId>
@@ -68,4 +72,12 @@
       <artifactId>springfox-swagger-ui</artifactId>
     </dependency>
   </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
 </project>

@@ -13,6 +13,10 @@
   <name>merchant-api</name>
   <description>Merchants Api</description>
 
+  <properties>
+    <skipTests>true</skipTests>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>io.mjd507</groupId>

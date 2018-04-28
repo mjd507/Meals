@@ -28,6 +28,8 @@ public class LoginInterceptorConfig extends WebMvcConfigurationSupport {
     List<String> userExclude = new ArrayList<>();
     userExclude.add("/loginByWeApp");
     userExclude.add("/loginByPhone");
+    userExclude.add("/swagger-resources/**");
+    userExclude.add("/swagger-ui.html");
     registry.addInterceptor(userLoginInterceptor())
         .addPathPatterns("/**").excludePathPatterns(userExclude)
     ;

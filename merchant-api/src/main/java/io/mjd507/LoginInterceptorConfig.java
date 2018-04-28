@@ -32,6 +32,8 @@ public class LoginInterceptorConfig extends WebMvcConfigurationSupport {
     merExclude.add("/sendSms");
     merExclude.add("/reviewer/**");
     merExclude.add("/api/**");
+    merExclude.add("/swagger-resources/**");
+    merExclude.add("/swagger-ui.html");
     registry.addInterceptor(loginInterceptor())
         .addPathPatterns("/**")
         .excludePathPatterns(merExclude)

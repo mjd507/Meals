@@ -12,7 +12,8 @@ public final class TokenUtils {
 
 
   public static String buildUserId(String token) {
-    return MD5Utils.encode(token);
+    String s = new StringBuilder().append(token).reverse().toString();
+    return MD5Utils.encode(s);
   }
 
   public static void main(String args[]) {

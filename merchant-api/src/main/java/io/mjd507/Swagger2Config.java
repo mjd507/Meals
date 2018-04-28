@@ -32,7 +32,6 @@ public class Swagger2Config {
     return new ApiInfoBuilder()
         .title("商家版")
         .description("商家接口列表")
-        .termsOfServiceUrl("http://localhost:9090/merchant/swagger-ui.html")
         .version("1.0")
         .build();
   }

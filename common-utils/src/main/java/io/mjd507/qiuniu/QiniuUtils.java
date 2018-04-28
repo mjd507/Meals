@@ -50,11 +50,11 @@ public class QiniuUtils {
     }
   }
 
-  public static String uploadToken(String requestBucket, String key) {
+  public static String uploadToken(String requestBucket, String fileName) {
     if (requestBucket == null) {
       requestBucket = bucket;
     }
-    return auth.uploadToken(requestBucket, key);
+    return auth.uploadToken(requestBucket, fileName);
   }
 
   public static String pubicUpload(byte[] data, String name) {

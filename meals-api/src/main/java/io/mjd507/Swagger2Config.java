@@ -32,7 +32,6 @@ public class Swagger2Config {
     return new ApiInfoBuilder()
         .title("Meals")
         .description("Meals 接口列表")
-        .termsOfServiceUrl("http://localhost:8080/swagger-ui.html")
         .version("1.0")
         .build();
   }

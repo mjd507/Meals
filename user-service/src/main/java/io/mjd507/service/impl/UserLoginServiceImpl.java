@@ -2,10 +2,12 @@ package io.mjd507.service.impl;
 
 import io.mjd507.dao.LoginServiceMapper;
 import io.mjd507.entity.LoginVo;
+import io.mjd507.entity.MerchantUserVo;
 import io.mjd507.entity.UserVo;
 import io.mjd507.entity.WeAppSession;
 import io.mjd507.service.ILoginService;
 import io.mjd507.service.IUserService;
+import io.mjd507.sms.SmsService;
 import io.mjd507.utils.LoginUtils;
 import io.mjd507.utils.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +27,30 @@ public class UserLoginServiceImpl implements ILoginService<UserVo> {
   @Autowired
   private IUserService<UserVo> userService;
 
+  @Autowired
+  private SmsService smsService;
+
   @Override
   public UserVo loginByPhone(String phone, String verifyCode) {
-
+    boolean validSuccess = smsService.hasPhoneAndCode(phone, verifyCode);
+    // 短信验证通过
+    if (validSuccess) {
+      UserVo userByPhone = userService.findUserByPhone(phone);
+      if (userByPhone != null && userByPhone.getUserId() != null) { // 用户存在
+        return userByPhone;
+      } else {
+        String userId = TokenUtils.buildUserId(phone);
+        UserVo user = new UserVo();
+        user.setUserId(userId);
+        user.setPhone(phone);
+        LoginVo loginVo = new LoginVo();
+        loginVo.setUserId(userId);
+        loginVo.setPhone(phone);
+        loginServiceMapper.insertLoginVo(loginVo);
+        userService.addUser(user);
+        return user;
+      }
+    }
     return null;
   }
 
