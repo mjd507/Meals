@@ -1,9 +1,10 @@
 <template>
   <div class="wrapper">
     <div class="merchants">
-      <div class="mer-item">
-        <div class="mer-name"></div>
-        <div class="mer-location"></div>
+      <div class="mer-item" v-for="item in merchantList" :key="item.merchantId">
+        <div class="mer-name">{{item.name}}</div>
+        <div class="mer-desc">{{item.desc}}</div>
+        <div class="mer-location">{{item.location}}</div>
       </div>
     </div>
   </div>
@@ -11,7 +12,9 @@
 <script>
 export default {
   data() {
-    return {}
+    return {
+      merchantList: []
+    }
   },
   created() {
     this.getMerchantList()
@@ -20,7 +23,11 @@ export default {
     getMerchantList() {
       this.fetch({
         url: this.apis.getMerchantList
-      }).then({})
+      }).then((res) => {
+        if (res && res.length) {
+          this.merchantList = res
+        }
+      })
     }
   }
 }

@@ -1,31 +1,54 @@
 <template>
   <div class="header">
     <div class="title">途虎订餐系统</div>
-    <div class="user">{{userName}}</div>
+    <div class="user" @click="handleClick">{{currentStatus === userStatusDef.notLogin.code ? userStatusDef.notLogin.desc : currentStatus === userStatusDef.noUserName.code ? userStatusDef.noUserName.desc : userName }}</div>
   </div>
 </template>
 
 <script>
+import store from 'store'
+import bus from '../modules/EventBus'
+import EventDef from '../modules/EventDef'
+
 export default {
   data() {
     return {
-      userName: ''
+      userStatusDef: {
+        notLogin: { code: 1, desc: '登录' },
+        noUserName: { code: 2, desc: '补全个人信息' },
+        hasUserName: { code: 3, desc: '登录并已补全信息' }
+      },
+      currentStatus: 1
     }
   },
   created() {
-    this.getUser()
+    bus.$on(EventDef.updateUserInfo, (userInfo) => {
+      this.showUserStatus(userInfo)
+    })
+    const userInfo = store.get('userInfo')
+    this.showUserStatus(userInfo)
   },
   methods: {
-    getUser() {
-      this.fetch({
-        url: this.apis.getUserName
-      }).then((res) => {
-        this.userName = res;
-        this.userName = '马剑东'
-      })
+    showUserStatus(userInfo) {
+      const { userId, userName } = userInfo || ''
+      if (!userId) {
+        this.currentStatus = this.userStatusDef.notLogin.code
+      } else if (!userName) {
+        this.currentStatus = this.userStatusDef.noUserName.code
+      } else {
+        this.currentStatus = this.userStatusDef.hasUserName.code
+        this.userName = userName
+      }
     },
-    logout() {
-      window.location = this.apis.logout
+    handleClick() {
+      const { currentStatus, userStatusDef } = this
+      if (currentStatus === userStatusDef.notLogin.code) {
+        // 显示登录面板
+        bus.$emit(EventDef.showLoginLayout, true)
+      } else if (currentStatus === userStatusDef.noUserName.code) {
+        // 显示补全用户信息面板
+        bus.$emit(EventDef.showUserLayout, true)
+      }
     }
   }
 }
@@ -33,7 +56,6 @@ export default {
 
 <style lang="less" scoped>
 .header {
-
   height: 3rem;
   background: #d12a3e;
   display: flex;
@@ -46,6 +68,8 @@ export default {
     font-weight: bold;
   }
   .user {
+    width: 10rem;
+    text-align: right;
     color: white;
     font-size: 1rem;
   }

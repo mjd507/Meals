@@ -1,9 +1,11 @@
 <template>
   <div id="app">
-    <mLogin v-if="showLoginLayout" />
-    <mLoading v-if="showLoading" />
     <mHeader/>
     <router-view/>
+    <!-- helper layout -->
+    <mLogin v-if="showLoginLayout" />
+    <mLoading v-if="showLoading" />
+    <mUserInfo v-if="showUserLayout" />
   </div>
 </template>
 
@@ -11,6 +13,7 @@
 import Header from '@/components/header'
 import Login from '@/components/login'
 import Loading from '@/components/loading'
+import UserInfo from '@/components/userInfo'
 import bus from './modules/EventBus'
 import EventDef from './modules/EventDef'
 
@@ -19,16 +22,19 @@ export default {
   components: {
     mHeader: Header,
     mLogin: Login,
-    mLoading: Loading
+    mLoading: Loading,
+    mUserInfo: UserInfo
   },
   data() {
     return {
-      // 登录
+      // 登录面板
       showLoginLayout: false,
       // 信息提示
       showMsg: false,
       // Loading 提示
-      showLoading: false
+      showLoading: false,
+      // 用户信息设置面板
+      showUserLayout: false
     }
   },
   created() {
@@ -40,9 +46,13 @@ export default {
     bus.$on(EventDef.showMsg, (msgObj) => {
       this.showMsgByType(msgObj)
     })
-    // 加载控制
+    // Loading 加载控制
     bus.$on(EventDef.showLoading, (status) => {
       this.showLoading = status
+    })
+    // 用户信息设置界面
+    bus.$on(EventDef.showUserLayout, (status) => {
+      this.showUserLayout = status
     })
   },
   methods: {

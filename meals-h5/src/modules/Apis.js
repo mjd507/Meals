@@ -16,7 +16,9 @@ baseURL += '/meals/'
 const apis = {
   sendSms: 'sendSms',
   loginByPhone: 'loginByPhone',
-  getMerchantList: 'getMerchantList'
+  updateUser: 'updateUser',
+  getMerchantList: 'getMerchantList',
+  getUserInfo: 'getUserInfo'
 }
 
 Object.keys(apis).forEach((key) => {

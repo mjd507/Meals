@@ -1,6 +1,7 @@
 <template>
   <div class="layout-login">
     <div class="panel">
+      <div class="panel-close el-icon-close" @click="hidePanel"></div>
       <el-input class="phone" v-model="phone" type="text" value="number" placeholder="手机号"></el-input>
       <div class="verifyCode">
         <el-input style="width:auto" v-model="verifyCode" placeholder="验证码"></el-input>
@@ -30,11 +31,8 @@ export default {
       if (!this.validPhoneNumber(this.phone)) return
       this.fetch({
         url: this.apis.sendSms,
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         data: {
-          phone: this.phone,
-          verifyCode: this.verifyCode
+          phone: this.phone
         }
       }).then((res) => {
         if (res) {
@@ -48,7 +46,7 @@ export default {
             }
             this.timeDownText = `${second}s后重试`
           }, 1000)
-          this.$emit(EventDef.showMsg, {
+          bus.$emit(EventDef.showMsg, {
             text: res,
             type: EventDef.MsgType.INFO
           })
@@ -69,7 +67,11 @@ export default {
       }).then((res) => {
         if (res) {
           this.store.set('userInfo', res)
-          this.$emit(EventDef.showLoginLayout, false)
+          this.hidePanel()
+          // 更新头部用户个人信息
+          bus.$emit(EventDef.updateUserInfo, res)
+          // 显示补全个人信息面板
+          bus.$emit(EventDef.showUserLayout, true)
         }
       })
     },
@@ -84,6 +86,9 @@ export default {
         })
         return false
       }
+    },
+    hidePanel() {
+      bus.$emit(EventDef.showLoginLayout, false)
     }
   }
 }
@@ -96,6 +101,8 @@ export default {
   position: fixed;
   width: 100%;
   height: 100%;
+  top: 0;
+  left: 0;
   box-sizing: border-box;
   z-index: 9;
   background: rgba(0, 0, 0, 0.3);
@@ -111,6 +118,14 @@ export default {
     justify-content: center;
     align-items: center;
     border-radius: 1rem;
+    position: relative;
+    .panel-close {
+      content: '';
+      position: absolute;
+      top: 1rem;
+      right: 2rem;
+      color: #ccc;
+    }
     .phone {
       width: @item-width;
     }

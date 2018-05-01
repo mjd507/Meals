@@ -1,4 +1,3 @@
-
 <template >
   <div class="layout-loading">
     <div class="loading-content">
