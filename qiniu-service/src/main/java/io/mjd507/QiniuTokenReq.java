@@ -1,4 +1,4 @@
-package io.mjd507.common.request;
+package io.mjd507;
 
 import java.util.List;
 import lombok.Getter;

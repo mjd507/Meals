@@ -1,4 +1,4 @@
-package io.mjd507.common.request;
+package io.mjd507.common;
 
 /**
  * Created by mjd on 2018/3/25 18:44

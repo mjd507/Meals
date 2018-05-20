@@ -8,11 +8,9 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-public class LoginVo {
+public class LoginDo {
 
   private String userId;
-  private String openId;
-  private String phone;
-  private String expireAt;
+  private String token;
 
 }

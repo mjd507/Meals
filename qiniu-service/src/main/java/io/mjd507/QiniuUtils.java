@@ -1,4 +1,4 @@
-package io.mjd507.qiuniu;
+package io.mjd507;
 
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;

@@ -9,8 +9,8 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>common-utils</artifactId>
-
+  <artifactId>qiniu-service</artifactId>
+  <description>七牛云相关服务</description>
 
   <dependencies>
     <dependency>
@@ -26,19 +26,8 @@
       <artifactId>lombok</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.google.code.gson</groupId>
-      <artifactId>gson</artifactId>
+      <groupId>com.qiniu</groupId>
+      <artifactId>qiniu-java-sdk</artifactId>
     </dependency>
-    <dependency>
-      <groupId>com.squareup.okhttp3</groupId>
-      <artifactId>okhttp</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.google.guava</groupId>
-      <artifactId>guava</artifactId>
-      <version>11.0.2</version>
-    </dependency>
-
   </dependencies>
-
 </project>
