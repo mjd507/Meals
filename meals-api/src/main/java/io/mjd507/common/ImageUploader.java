@@ -1,6 +1,6 @@
 package io.mjd507.common;
 
-import io.mjd507.qiuniu.QiniuUtils;
+import io.mjd507.QiniuUtils;
 import io.swagger.annotations.ApiOperation;
 import java.io.IOException;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -20,7 +20,7 @@
   <dependencies>
     <dependency>
       <groupId>io.mjd507</groupId>
-      <artifactId>user-service</artifactId>
+      <artifactId>merchant-user-service</artifactId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
     <dependency>

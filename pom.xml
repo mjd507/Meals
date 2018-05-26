@@ -9,12 +9,15 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>meals-api</module>
-		<module>common-utils</module>
-		<module>merchant-api</module>
-		<module>merchant-service</module>
+    <module>meals-api</module>
+    <module>merchant-api</module>
+    <module>login-service</module>
     <module>user-service</module>
+    <module>common-utils</module>
+    <module>merchant-service</module>
     <module>meals-service</module>
+    <module>sms-service</module>
+    <module>qiniu-service</module>
   </modules>
 
 	<name>meals</name>

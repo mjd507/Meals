@@ -2,7 +2,7 @@ package io.mjd507.merchant;
 
 import io.mjd507.common.ConfigProperties;
 import io.mjd507.common.UserAttrSetter;
-import io.mjd507.common.request.DataResponse;
+import io.mjd507.common.DataResponse;
 import io.mjd507.http.HttpRequest;
 import io.mjd507.http.HttpUtils;
 import io.mjd507.merchant.entity.MealsVo;

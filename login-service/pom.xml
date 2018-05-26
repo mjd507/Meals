@@ -11,6 +11,10 @@
 
   <artifactId>login-service</artifactId>
 
+  <properties>
+    <skipTests>true</skipTests>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>io.mjd507</groupId>

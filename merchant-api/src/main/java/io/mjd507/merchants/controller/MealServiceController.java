@@ -1,11 +1,10 @@
 package io.mjd507.merchants.controller;
 
-import io.mjd507.common.MerchantUserAttrSetter;
-import io.mjd507.common.constants.Constants;
-import io.mjd507.common.request.DataResponse;
+import io.mjd507.common.MchUserAttrSetter;
+import io.mjd507.module.login.Constants;
+import io.mjd507.common.DataResponse;
 import io.mjd507.entity.MealVo;
-import io.mjd507.entity.MerchantMetaVo;
-import io.mjd507.entity.MerchantUserVo;
+import io.mjd507.module.mchuser.MchUserDto;
 import io.mjd507.service.MealsService;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
@@ -21,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by mjd on 2018/4/18 20:15
  */
 @RestController
-public class MealServiceController extends MerchantUserAttrSetter {
+public class MealServiceController extends MchUserAttrSetter {
 
   @Autowired
   MealsService mealsService;
@@ -29,7 +28,7 @@ public class MealServiceController extends MerchantUserAttrSetter {
   @ApiOperation(value = "添加菜品")
   @ResponseBody
   @RequestMapping(value = "addMeal", method = RequestMethod.POST)
-  public DataResponse<String> addMeal(@ModelAttribute(Constants.USER_ATTR) MerchantUserVo user,
+  public DataResponse<String> addMeal(@ModelAttribute(Constants.HEADER_AUTH) MchUserDto user,
       @RequestBody MealVo mealVo) {
     mealVo.setMerchantId("MER" + user.getUserId());
     boolean isAdd = mealsService.addMeal(mealVo);
@@ -40,14 +39,14 @@ public class MealServiceController extends MerchantUserAttrSetter {
   @ResponseBody
   @RequestMapping(value = "getMealsByMerchant", method = RequestMethod.GET)
   public DataResponse<List<MealVo>> getMealsByMerchant(
-      @ModelAttribute(Constants.USER_ATTR) MerchantUserVo user) {
+      @ModelAttribute(Constants.HEADER_AUTH) MchUserDto user) {
     List<MealVo> meals = mealsService.getMealsByMerchant("MER" + user.getUserId());
     return new DataResponse<>(meals);
   }
 
   @ResponseBody
   @RequestMapping(value = "updateMeal", method = RequestMethod.POST)
-  public DataResponse<String> updateMeal(@ModelAttribute(Constants.USER_ATTR) MerchantUserVo user,
+  public DataResponse<String> updateMeal(@ModelAttribute(Constants.HEADER_AUTH) MchUserDto user,
       @RequestBody MealVo mealVo) {
     mealVo.setMerchantId("MER" + user.getUserId());
     boolean isUpdate = mealsService.updateMeal(mealVo);

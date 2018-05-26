@@ -31,7 +31,13 @@ export default {
       userName: ''
     }
   },
-  created() {},
+  created() {
+    const userInfo = store.get('userInfo') || ''
+    const { userName, department, userGroup } = userInfo
+    this.userName = userName
+    this.currDepartment = department
+    this.currGroup = userGroup
+  },
   methods: {
     confirm() {
       if (!this.vaildInput()) return

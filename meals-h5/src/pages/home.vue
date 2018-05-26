@@ -35,6 +35,13 @@ export default {
 <style lang="less" scoped>
 .wrapper {
   width: 100%;
-  background: #f0f0f0;
+  height: 100%;
+}
+.merchants {
+  width: 100%;
+  .mer-item {
+    width: 15rem;
+    height: 15rem;
+  }
 }
 </style>

@@ -1,10 +1,10 @@
 package io.mjd507.order;
 
 import io.mjd507.common.UserAttrSetter;
-import io.mjd507.common.constants.Constants;
-import io.mjd507.common.request.DataResponse;
+import io.mjd507.module.login.Constants;
+import io.mjd507.common.DataResponse;
 import io.mjd507.entity.OrderVo;
-import io.mjd507.entity.UserVo;
+import io.mjd507.module.user.UserDto;
 import io.mjd507.order.request.OrderVoReq;
 import io.mjd507.service.OrderService;
 import java.util.List;
@@ -25,7 +25,7 @@ public class OrderController extends UserAttrSetter {
   OrderService orderService;
 
   @RequestMapping(value = "submitOrder", method = RequestMethod.POST)
-  public DataResponse<String> submitOrder(@ModelAttribute(Constants.USER_ATTR) UserVo user,
+  public DataResponse<String> submitOrder(@ModelAttribute(Constants.HEADER_AUTH) UserDto user,
       @RequestBody OrderVoReq orderVoReq) {
     OrderVo orderVo = new OrderVo();
     orderVo.setUserId(user.getUserId());
@@ -51,7 +51,7 @@ public class OrderController extends UserAttrSetter {
   }
 
   @RequestMapping(value = "getOrders", method = RequestMethod.GET)
-  public DataResponse<List<OrderVo>> findOrders(@ModelAttribute(Constants.USER_ATTR) UserVo user) {
+  public DataResponse<List<OrderVo>> findOrders(@ModelAttribute(Constants.HEADER_AUTH) UserDto user) {
     List<OrderVo> orders = orderService.findOrder(user.getUserId());
     return new DataResponse<>(orders);
   }

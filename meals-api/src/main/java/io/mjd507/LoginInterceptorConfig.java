@@ -26,8 +26,10 @@ public class LoginInterceptorConfig extends WebMvcConfigurationSupport {
   @Override
   protected void addInterceptors(InterceptorRegistry registry) {
     List<String> userExclude = new ArrayList<>();
-    userExclude.add("/loginByWeApp");
-    userExclude.add("/loginByPhone");
+    userExclude.add("/user/loginByPhone");
+    userExclude.add("/sendSms");
+    userExclude.add("/getMerchantList");
+    userExclude.add("/getMealsByMerchant");
     userExclude.add("/swagger-resources/**");
     userExclude.add("/swagger-ui.html");
     registry.addInterceptor(userLoginInterceptor())

@@ -27,7 +27,6 @@ public class LoginInterceptorConfig extends WebMvcConfigurationSupport {
   protected void addInterceptors(InterceptorRegistry registry) {
 
     List<String> merExclude = new ArrayList<>();
-    merExclude.add("/loginByWeApp");
     merExclude.add("/loginByPhone");
     merExclude.add("/sendSms");
     merExclude.add("/reviewer/**");

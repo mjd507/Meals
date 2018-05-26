@@ -1,7 +1,7 @@
 package io.mjd507.common;
 
-import io.mjd507.common.constants.Constants;
-import io.mjd507.entity.UserVo;
+import io.mjd507.module.login.Constants;
+import io.mjd507.module.user.UserDto;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,7 +13,7 @@ public class UserAttrSetter {
 
   @ModelAttribute
   public void putAttr(HttpServletRequest request, Model mode) {
-    UserVo userVo = (UserVo) request.getAttribute(Constants.USER_ATTR);
-    mode.addAttribute(Constants.USER_ATTR, userVo);
+    UserDto userDto = (UserDto) request.getAttribute(Constants.HEADER_AUTH);
+    mode.addAttribute(Constants.HEADER_AUTH, userDto);
   }
 }

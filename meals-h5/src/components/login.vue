@@ -31,8 +31,12 @@ export default {
       if (!this.validPhoneNumber(this.phone)) return
       this.fetch({
         url: this.apis.sendSms,
+        method: 'POST',
         data: {
           phone: this.phone
+        },
+        headers: {
+          'content-type': 'application/x-www-form-urlencoded'
         }
       }).then((res) => {
         if (res) {

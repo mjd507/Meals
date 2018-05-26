@@ -36,8 +36,13 @@ export default {
       } else if (!userName) {
         this.currentStatus = this.userStatusDef.noUserName.code
       } else {
-        this.currentStatus = this.userStatusDef.hasUserName.code
-        this.userName = userName
+        // 如果是更新信息，currentStatus 状态没变
+        // 这里先更新没有用户名的状态，10ms 在后刷一次
+        this.currentStatus = this.userStatusDef.noUserName.code
+        setTimeout(() => {
+          this.userName = userName
+          this.currentStatus = this.userStatusDef.hasUserName.code
+        }, 10)
       }
     },
     handleClick() {
@@ -46,7 +51,10 @@ export default {
         // 显示登录面板
         bus.$emit(EventDef.showLoginLayout, true)
       } else if (currentStatus === userStatusDef.noUserName.code) {
-        // 显示补全用户信息面板
+        // 显示用户信息面板
+        bus.$emit(EventDef.showUserLayout, true)
+      } else if (currentStatus === userStatusDef.hasUserName.code) {
+        // 显示用户信息面板
         bus.$emit(EventDef.showUserLayout, true)
       }
     }

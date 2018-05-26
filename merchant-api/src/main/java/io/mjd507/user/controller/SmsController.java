@@ -1,7 +1,7 @@
 package io.mjd507.user.controller;
 
-import io.mjd507.common.request.DataResponse;
-import io.mjd507.sms.SmsService;
+import io.mjd507.common.DataResponse;
+import io.mjd507.module.sms.SmsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
