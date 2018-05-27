@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.UpdateProvider;
  * Created by mjd on 2018/4/21 18:29
  */
 /*
-CREATE TABLE `tb_merchant_user` (
+CREATE TABLE `tb_mch_user` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` varchar(50) NOT NULL DEFAULT '',
   `user_name` varchar(50) NOT NULL DEFAULT '' COMMENT '用户名称',
@@ -29,14 +29,14 @@ CREATE TABLE `tb_merchant_user` (
 public interface MchUserServiceMapper {
 
   @Insert({
-      "INSERT INTO tb_merchant_user (`user_id`, `user_name`, `nick_name`, `phone`, `avatar`,`created_at`, "
+      "INSERT INTO tb_mch_user (`user_id`, `user_name`, `nick_name`, `phone`, `avatar`,`created_at`, "
           + "`updated_at`) VALUES (#{userId}, #{userName}, #{nickName}, #{phone}, #{avatar}, "
           + "now(), now())"})
   int addUser(MchUserDo mchUserDo);
 
   @Select({
       "SELECT `id`,`user_id`,`user_name`,`nick_name`,`phone`,`avatar`,`created_at`,`updated_at` "
-          + "FROM tb_merchant_user WHERE user_id = #{userId}"})
+          + "FROM tb_mch_user WHERE user_id = #{userId}"})
   @Results({
       @Result(column = "id", property = "id"),
       @Result(column = "user_id", property = "userId"),
@@ -52,7 +52,7 @@ public interface MchUserServiceMapper {
   @UpdateProvider(type = MchUserServiceMapperSql.class, method = "updateBySelective")
   int updateBySelective(MchUserDo user);
 
-  @Delete({"DELETE FROM tb_merchant_user WHERE user_id = #{userId}"})
+  @Delete({"DELETE FROM tb_mch_user WHERE user_id = #{userId}"})
   int deleteUserByUserId(String userId);
 
 }

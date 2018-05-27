@@ -1,12 +1,12 @@
-package io.mjd507.merchant.entity;
+package io.mjd507;
 
 import lombok.Data;
 
 /**
- * Created by mjd on 2018/4/27 09:26
+ * Created by mjd on 2018/4/16 20:57
  */
 @Data
-public class MealsVo {
+public class MealVo {
 
   private Long id;
 
@@ -17,4 +17,5 @@ public class MealsVo {
   private String mealDesc;
 
   private String mealPrice;
+
 }

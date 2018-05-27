@@ -1,12 +1,15 @@
 package io.mjd507.order;
 
+import io.mjd507.CopyUtils;
+import io.mjd507.OrderDo;
+import io.mjd507.OrderDto;
+import io.mjd507.OrderService;
+import io.mjd507.OrderVo;
+import io.mjd507.common.DataResponse;
 import io.mjd507.common.UserAttrSetter;
 import io.mjd507.module.login.Constants;
-import io.mjd507.common.DataResponse;
-import io.mjd507.entity.OrderVo;
 import io.mjd507.module.user.UserDto;
 import io.mjd507.order.request.OrderVoReq;
-import io.mjd507.service.OrderService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,16 +28,15 @@ public class OrderController extends UserAttrSetter {
   OrderService orderService;
 
   @RequestMapping(value = "submitOrder", method = RequestMethod.POST)
-  public DataResponse<String> submitOrder(@ModelAttribute(Constants.HEADER_AUTH) UserDto user,
+  public DataResponse<String> submitOrder(@ModelAttribute(Constants.HEADER_AUTH) UserDto userDto,
       @RequestBody OrderVoReq orderVoReq) {
-    OrderVo orderVo = new OrderVo();
-    orderVo.setUserId(user.getUserId());
-    orderVo.setMerchantId(orderVoReq.getMerchantId());
-    orderVo.setMerchantName(orderVoReq.getMerchantName());
-    orderVo.setMealsIds(listToStr(orderVoReq.getMealsIds()));
-    orderVo.setMealsNames(listToStr(orderVoReq.getMealsNames()));
-    boolean isAdd = orderService.addOrder(orderVo);
-    return new DataResponse<>(isAdd ? "提交成功" : "提交失败");
+    OrderDo orderDo = new OrderDo();
+    orderDo.setUserId(userDto.getUserId());
+    orderDo.setMchId(orderVoReq.getMchId());
+    orderDo.setMchName(orderVoReq.getMchName());
+    orderDo.setMealName(listToStr(orderVoReq.getMealName()));
+    int count = orderService.submitOrder(orderDo);
+    return new DataResponse<>(count > 0 ? "提交成功" : "提交失败");
   }
 
   private String listToStr(List<String> list) {
@@ -51,8 +53,10 @@ public class OrderController extends UserAttrSetter {
   }
 
   @RequestMapping(value = "getOrders", method = RequestMethod.GET)
-  public DataResponse<List<OrderVo>> findOrders(@ModelAttribute(Constants.HEADER_AUTH) UserDto user) {
-    List<OrderVo> orders = orderService.findOrder(user.getUserId());
-    return new DataResponse<>(orders);
+  public DataResponse<List<OrderVo>> findOrders(
+      @ModelAttribute(Constants.HEADER_AUTH) UserDto userDto) {
+    List<OrderDto> orderDtos = orderService.findOrderByUser(userDto.getUserId());
+    List<OrderVo> orderVos = CopyUtils.copyList(orderDtos, OrderVo.class);
+    return new DataResponse<>(orderVos);
   }
 }

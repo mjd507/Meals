@@ -15,7 +15,7 @@
     <module>user-service</module>
     <module>common-utils</module>
     <module>merchant-service</module>
-    <module>meals-service</module>
+    <module>order-service</module>
     <module>sms-service</module>
     <module>qiniu-service</module>
   </modules>

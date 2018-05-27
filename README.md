@@ -62,7 +62,7 @@ LoginDto 实体中包含了 userId，token，phone，openId，expiredAt 信息
 
 ## user-service 用户模块
 
-这里包含 normal-user-service 和 merchant-user-service 两个子模块，接口差不太多，以 normal-user-service 为例。
+包含 normal-user-service 和 merchant-user-service 两个子模块，接口差不太多，以 normal-user-service 为例。
 
 UserVo 包含了 token 以及用户的基本信息
 
@@ -100,3 +100,23 @@ UserVo 包含了 token 以及用户的基本信息
   int deleteUserById(String userId);
   
   ```
+
+## common-utils 模块
+
+包含基本的工具类。Bean 实体拷贝，日期转换，json 工具，MD5 等。
+
+## qiniu-service 模块
+
+七牛图片上传相关服务
+
+## 业务模块
+
+merchant-service 商家服务模块
+
+merchant-api 对商户端的 api 以及对用户端的 api
+
+order-service 用户端订单服务模块
+
+meals-api 用户端 api 接口
+
+

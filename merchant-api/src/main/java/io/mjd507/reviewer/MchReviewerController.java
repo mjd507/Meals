@@ -1,13 +1,16 @@
 package io.mjd507.reviewer;
 
+import io.mjd507.CopyUtils;
+import io.mjd507.MchMetaDto;
+import io.mjd507.MchMetaService;
+import io.mjd507.MchMetaVo;
 import io.mjd507.common.DataResponse;
-import io.mjd507.entity.MerchantMetaVo;
-import io.mjd507.service.MerchantService;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,22 +24,23 @@ import org.springframework.web.bind.annotation.RestController;
 public class MchReviewerController {
 
   @Autowired
-  MerchantService merchantService;
+  MchMetaService mchMetaService;
 
   @ApiOperation(value = "查看待审核商家列表")
   @ResponseBody
-  @RequestMapping(value = "getApplyMerchants", method = RequestMethod.GET)
-  public DataResponse<List<MerchantMetaVo>> getApplyMerchants() {
-    List<MerchantMetaVo> waitActiveMerchant = merchantService.findWaitActiveMerchant();
-    return new DataResponse<>(waitActiveMerchant);
+  @RequestMapping(value = "getApplyMchList", method = RequestMethod.GET)
+  public DataResponse<List<MchMetaVo>> getApplyMerchants() {
+    List<MchMetaDto> waitActiveList = mchMetaService.getWaitActiveMerchant();
+    List<MchMetaVo> metaVoList = CopyUtils.copyList(waitActiveList, MchMetaVo.class);
+    return new DataResponse<>(metaVoList);
   }
 
   @ApiOperation(value = "同意商家入驻")
   @ResponseBody
-  @RequestMapping(value = "agreeApplyMerchant", method = RequestMethod.POST)
-  public DataResponse<String> agreeApplyMerchant(String merchantId) {
-    boolean isSuccess = merchantService.activeMerchant(merchantId);
-    return new DataResponse<>(isSuccess ? "审核完成" : "审核失败");
+  @RequestMapping(value = "agreeApplyMch", method = RequestMethod.POST)
+  public DataResponse<String> agreeApplyMerchant(@RequestParam String mchId) {
+    int count = mchMetaService.activeMerchant(mchId);
+    return new DataResponse<>(count > 0 ? "审核完成" : "审核失败");
   }
 
 }

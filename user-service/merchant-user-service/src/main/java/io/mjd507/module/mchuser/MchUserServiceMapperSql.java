@@ -10,7 +10,7 @@ public class MchUserServiceMapperSql {
 
   public String updateBySelective(MchUserDo mchUserDo) {
     return new SQL() {{
-      UPDATE("tb_merchant_user");
+      UPDATE("tb_mch_user");
       if (!Strings.isNullOrEmpty(mchUserDo.getUserName())) {
         SET("user_name = #{userName}");
       }

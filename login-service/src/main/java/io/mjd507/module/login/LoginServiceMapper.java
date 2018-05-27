@@ -26,7 +26,8 @@ CREATE TABLE `tb_login_token` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `token` (`token`)
+  UNIQUE KEY `idx_token` (`token`),
+  UNIQUE KEY `idx_open_id` (`open_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='登录信息表';
  */
 @Mapper

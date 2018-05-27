@@ -1,17 +1,15 @@
 package io.mjd507.order.request;
 
 import java.util.List;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * Created by mjd on 2018/4/26 21:38
  */
-@Setter
-@Getter
+@Data
 public class OrderVoReq {
-  private String merchantId;
-  private String merchantName;
-  private List<String> mealsIds;
-  private List<String> mealsNames;
+
+  private String mchId;
+  private String mchName;
+  private List<String> mealName;
 }
