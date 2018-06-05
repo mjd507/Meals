@@ -1,12 +1,12 @@
 <template>
-  <div class="layout-user-setting">
+  <div class="layout-user-setting" v-if="showUserSettingLayout">
     <div class="panel">
       <div class="panel-close el-icon-close" @click="hidePanel"></div>
-      <el-select class="department" v-model="currDepartment" placeholder="">
+      <el-select class="department" v-model="currDepartment" placeholder="选择部门">
         <el-option v-for="item in departments" :key="item.value" :value="item.value">
         </el-option>
       </el-select>
-      <el-select class="group" v-model="currGroup" placeholder="">
+      <el-select class="group" v-model="currGroup" placeholder="选择组别">
         <el-option v-for="item in groups" :key="item.value" :value="item.value">
         </el-option>
       </el-select>
@@ -24,6 +24,7 @@ import EventDef from '../modules/EventDef'
 export default {
   data() {
     return {
+      showUserSettingLayout: false,
       departments: [{ value: '研发部' }, { value: '运营部' }],
       currDepartment: '研发部',
       groups: [{ value: ' Java组' }, { value: '小程序组' }, { value: 'APP组' }],
@@ -71,7 +72,7 @@ export default {
       })
     },
     hidePanel() {
-      bus.$emit(EventDef.showUserLayout, false)
+      this.showUserSettingLayout = false
     },
     vaildInput() {
       if (!this.userName) {

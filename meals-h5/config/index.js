@@ -11,9 +11,9 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-       // 代理所有的以 meals 开头的请求到 http://localhost:8080/meals
+       // 代理所有的以 meals 开头的请求到 http://106.14.205.164/meals
        '/meals': {
-        target: 'http://localhost:8080/meals',
+        target: 'http://106.14.205.164/meals',
         changeOrigin: true,
         pathRewrite: {
           '^/meals': ''

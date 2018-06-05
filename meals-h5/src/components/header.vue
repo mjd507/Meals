@@ -1,62 +1,49 @@
 <template>
   <div class="header">
-    <div class="title">途虎订餐系统</div>
-    <div class="user" @click="handleClick">{{currentStatus === userStatusDef.notLogin.code ? userStatusDef.notLogin.desc : currentStatus === userStatusDef.noUserName.code ? userStatusDef.noUserName.desc : userName }}</div>
+    <div class="title">订餐系统</div>
+    <div class="right">
+      <button v-if="userInfo && userInfo.userName" @click="showUserSettingLayout">{{userInfo.userName}}</button>
+      <button v-else @click="login">登录</button>
+    </div>
+    <login-layout ref="login"></login-layout>
+    <user-setting-layout ref="usersetting"></user-setting-layout>
   </div>
 </template>
 
 <script>
 import store from 'store'
+import loginLayout from '@/components/login'
+import userSettingLayout from '@/components/userInfo'
 import bus from '../modules/EventBus'
 import EventDef from '../modules/EventDef'
 
 export default {
+  components: {
+    loginLayout,
+    userSettingLayout
+  },
   data() {
     return {
-      userStatusDef: {
-        notLogin: { code: 1, desc: '登录' },
-        noUserName: { code: 2, desc: '补全个人信息' },
-        hasUserName: { code: 3, desc: '登录并已补全信息' }
-      },
-      currentStatus: 1
+      userInfo: ''
     }
   },
   created() {
     bus.$on(EventDef.updateUserInfo, (userInfo) => {
-      this.showUserStatus(userInfo)
+      this.updateHeaderUser(userInfo)
     })
-    const userInfo = store.get('userInfo')
-    this.showUserStatus(userInfo)
+    this.userInfo = store.get('userInfo')
   },
   methods: {
-    showUserStatus(userInfo) {
-      const { userId, userName } = userInfo || ''
-      if (!userId) {
-        this.currentStatus = this.userStatusDef.notLogin.code
-      } else if (!userName) {
-        this.currentStatus = this.userStatusDef.noUserName.code
-      } else {
-        // 如果是更新信息，currentStatus 状态没变
-        // 这里先更新没有用户名的状态，10ms 在后刷一次
-        this.currentStatus = this.userStatusDef.noUserName.code
-        setTimeout(() => {
-          this.userName = userName
-          this.currentStatus = this.userStatusDef.hasUserName.code
-        }, 10)
-      }
+    login() {
+      // 显示登录面板
+      this.$refs.login.showLoginLayout = true
     },
-    handleClick() {
-      const { currentStatus, userStatusDef } = this
-      if (currentStatus === userStatusDef.notLogin.code) {
-        // 显示登录面板
-        bus.$emit(EventDef.showLoginLayout, true)
-      } else if (currentStatus === userStatusDef.noUserName.code) {
-        // 显示用户信息面板
-        bus.$emit(EventDef.showUserLayout, true)
-      } else if (currentStatus === userStatusDef.hasUserName.code) {
-        // 显示用户信息面板
-        bus.$emit(EventDef.showUserLayout, true)
-      }
+    showUserSettingLayout() {
+      // 显示用户信息面板
+      this.$refs.usersetting.showUserSettingLayout = true
+    },
+    updateHeaderUser(userInfo) {
+      this.userInfo = userInfo
     }
   }
 }
@@ -75,11 +62,18 @@ export default {
     font-size: 1.2rem;
     font-weight: bold;
   }
-  .user {
+  .right {
     width: 10rem;
     text-align: right;
-    color: white;
-    font-size: 1rem;
+    button {
+      border: 0px;
+      background: transparent;
+      color: white;
+      font-size: 1rem;
+      &:focus {
+        outline: transparent;
+      }
+    }
   }
 }
 </style>

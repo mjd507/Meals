@@ -1,47 +1,33 @@
 <template>
   <div id="app">
-    <mHeader/>
+    <m-header/>
     <router-view/>
     <!-- helper layout -->
-    <mLogin v-if="showLoginLayout" />
-    <mLoading v-if="showLoading" />
-    <mUserInfo v-if="showUserLayout" />
+    <m-loading v-if="showLoading" />
   </div>
 </template>
 
 <script>
-import Header from '@/components/header'
-import Login from '@/components/login'
-import Loading from '@/components/loading'
-import UserInfo from '@/components/userInfo'
+import mHeader from '@/components/header'
+import mLoading from '@/components/loading'
 import bus from './modules/EventBus'
 import EventDef from './modules/EventDef'
 
 export default {
   name: 'App',
   components: {
-    mHeader: Header,
-    mLogin: Login,
-    mLoading: Loading,
-    mUserInfo: UserInfo
+    mHeader,
+    mLoading
   },
   data() {
     return {
-      // 登录面板
-      showLoginLayout: false,
       // 信息提示
       showMsg: false,
       // Loading 提示
-      showLoading: false,
-      // 用户信息设置面板
-      showUserLayout: false
+      showLoading: false
     }
   },
   created() {
-    // 登录页面控制
-    bus.$on(EventDef.showLoginLayout, (status) => {
-      this.showLoginLayout = status
-    })
     // 提示消息控制
     bus.$on(EventDef.showMsg, (msgObj) => {
       this.showMsgByType(msgObj)
@@ -49,10 +35,6 @@ export default {
     // Loading 加载控制
     bus.$on(EventDef.showLoading, (status) => {
       this.showLoading = status
-    })
-    // 用户信息设置界面
-    bus.$on(EventDef.showUserLayout, (status) => {
-      this.showUserLayout = status
     })
   },
   methods: {

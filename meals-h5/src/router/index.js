@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/pages/home'
+import MchList from '@/pages/mchList'
+import MealList from '@/pages/mealList'
 
 Vue.use(Router)
 
@@ -9,11 +10,12 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: Home
+      component: MchList
     },
     {
-      path: '/home',
-      component: Home
+      path: '/meals',
+      name: 'meals',
+      component: MealList
     }
   ]
 })

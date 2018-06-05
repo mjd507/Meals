@@ -5,20 +5,21 @@ switch (process.env.NODE_ENV) {
     baseURL = 'http://localhost:8081'
     break
   case 'production':
-    baseURL = 'http://localhost:8081'
+    baseURL = 'http://106.14.205.164'
     break
   default:
     baseURL = ''
 }
 
-baseURL += '/meals/'
+baseURL += '/meals'
 
 const apis = {
-  sendSms: 'sendSms',
-  loginByPhone: 'loginByPhone',
-  updateUser: 'updateUser',
-  getMerchantList: 'getMerchantList',
-  getUserInfo: 'getUserInfo'
+  sendSms: '/sendSms',
+  loginByPhone: '/user/loginByPhone',
+  updateUser: '/user/updateUser',
+  getUserInfo: '/user/getUserInfo',
+  getMerchantList: '/getMerchantList',
+  getMealsByMchId: '/getMealsList'
 }
 
 Object.keys(apis).forEach((key) => {

@@ -1,10 +1,10 @@
 <template>
-  <div class="layout-login">
+  <div class="layout-login" v-if="showLoginLayout">
     <div class="panel">
       <div class="panel-close el-icon-close" @click="hidePanel"></div>
       <el-input class="phone" v-model="phone" type="text" value="number" placeholder="手机号"></el-input>
       <div class="verifyCode">
-        <el-input style="width:auto" v-model="verifyCode" placeholder="验证码"></el-input>
+        <el-input class="vcode" v-model="verifyCode" placeholder="验证码"></el-input>
         <el-button type="danger" round @click="sendVerifyCode" :disabled=isBtnDisable>{{isBtnDisable ? timeDownText:'发送验证码'}}</el-button>
       </div>
       <el-button class="btn-login" type="danger" @click="loginByPhone">登录</el-button>
@@ -19,6 +19,7 @@ import EventDef from '../modules/EventDef'
 export default {
   data() {
     return {
+      showLoginLayout: false,
       phone: '',
       verifyCode: '',
       isBtnDisable: false,
@@ -70,12 +71,11 @@ export default {
         }
       }).then((res) => {
         if (res) {
+          this.store.set('userToken', res.extra)
           this.store.set('userInfo', res)
           this.hidePanel()
           // 更新头部用户个人信息
           bus.$emit(EventDef.updateUserInfo, res)
-          // 显示补全个人信息面板
-          bus.$emit(EventDef.showUserLayout, true)
         }
       })
     },
@@ -92,7 +92,7 @@ export default {
       }
     },
     hidePanel() {
-      bus.$emit(EventDef.showLoginLayout, false)
+      this.showLoginLayout = false
     }
   }
 }
@@ -132,6 +132,15 @@ export default {
     }
     .phone {
       width: @item-width;
+      :focus {
+        border: 1px solid #dcdfe6;
+      }
+    }
+    .vcode {
+      width: auto;
+      :focus {
+        border: 1px solid #dcdfe6;
+      }
     }
     .verifyCode {
       width: @item-width;

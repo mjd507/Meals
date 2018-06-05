@@ -21,7 +21,7 @@ const fetch = (opts) => {
   if (headers && headers['content-type'] === 'application/x-www-form-urlencoded') {
     reqData = qs.stringify(data)
   }
-  const userInfo = store.get('userInfo') || ''
+  const userToken = store.get('userToken') || ''
   const reqObj = {
     url,
     method,
@@ -29,7 +29,7 @@ const fetch = (opts) => {
     params: reqData,
     timeout: 5000,
     headers: Object.assign({
-      Authorization: userInfo.userId ? userInfo.userId : ''
+      Authorization: `Bearer ${userToken}`
     }, headers)
   }
   if (method === 'get' || method === 'GET') {
@@ -62,7 +62,7 @@ const fetch = (opts) => {
       hideLoadingFun()
       const { response } = error || '';
       const { status } = response || '';
-      if (status - 0 !== 0) {
+      if (status && status - 0 !== 0) {
         bus.$emit(EventDef.showMsg, {
           text: `错误状态码：${status}`,
           type: EventDef.MsgType.ERROR
