@@ -1,5 +1,6 @@
 package io.mjd507;
 
+import java.util.Date;
 import java.util.List;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -43,4 +44,16 @@ public interface OrderMapper {
   })
   List<OrderDo> findOrderByUser(String userId);
 
+  @Select({"SELECT `id`,`user_id`,`mch_id`,`mch_name`,`meal_name`,`created_at`,`updated_at` "
+      + "FROM tb_order WHERE to_days(`created_at`) = to_days(now())"})
+  @Results({
+      @Result(column = "id", property = "id"),
+      @Result(column = "user_id", property = "userId"),
+      @Result(column = "mch_id", property = "mchId"),
+      @Result(column = "mch_name", property = "mchName"),
+      @Result(column = "meal_name", property = "mealName"),
+      @Result(column = "created_at", property = "createdAt"),
+      @Result(column = "updated_at", property = "updatedAt"),
+  })
+  List<OrderDo> findTodayOrder();
 }

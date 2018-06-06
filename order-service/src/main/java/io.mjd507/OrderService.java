@@ -21,4 +21,9 @@ public class OrderService {
     List<OrderDo> orderDoList = orderMapper.findOrderByUser(userId);
     return CopyUtils.copyList(orderDoList, OrderDto.class);
   }
+
+  public List<OrderDto> findTodayOrder() {
+    List<OrderDo> orderDoList = orderMapper.findTodayOrder();
+    return CopyUtils.copyList(orderDoList, OrderDto.class);
+  }
 }

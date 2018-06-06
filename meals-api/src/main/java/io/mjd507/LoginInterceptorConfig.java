@@ -30,6 +30,7 @@ public class LoginInterceptorConfig extends WebMvcConfigurationSupport {
     userExclude.add("/sendSms");
     userExclude.add("/getMerchantList");
     userExclude.add("/getMealsByMerchant");
+    userExclude.add("/getTodayOrders");
     userExclude.add("/swagger-resources/**");
     userExclude.add("/swagger-ui.html");
     registry.addInterceptor(userLoginInterceptor())

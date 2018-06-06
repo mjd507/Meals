@@ -30,6 +30,12 @@ public class OrderController extends UserAttrSetter {
   @RequestMapping(value = "submitOrder", method = RequestMethod.POST)
   public DataResponse<String> submitOrder(@ModelAttribute(Constants.HEADER_AUTH) UserDto userDto,
       @RequestBody OrderVoReq orderVoReq) {
+    // 限制一个用户一天只下一单
+    if (hasSubmit(userDto.getUserId())) {
+      DataResponse<String> response = new DataResponse<>();
+      response.setFailure("请勿重复订餐");
+      return response;
+    }
     OrderDo orderDo = new OrderDo();
     orderDo.setUserId(userDto.getUserId());
     orderDo.setMchId(orderVoReq.getMchId());
@@ -37,6 +43,21 @@ public class OrderController extends UserAttrSetter {
     orderDo.setMealName(listToStr(orderVoReq.getMealName()));
     int count = orderService.submitOrder(orderDo);
     return new DataResponse<>(count > 0 ? "提交成功" : "提交失败");
+  }
+
+  private boolean hasSubmit(String userId) {
+    List<OrderDto> userOrders = orderService.findOrderByUser(userId);
+    List<OrderDto> todayOrders = orderService.findTodayOrder();
+    if (userOrders == null || userOrders.size() == 0) {
+      return false;
+    }
+    OrderDto userLastOrder = userOrders.get(userOrders.size() - 1);
+    for (OrderDto today : todayOrders) {
+      if (userLastOrder.getId().equals(today.getId())) {
+        return true;
+      }
+    }
+    return false;
   }
 
   private String listToStr(List<String> list) {
@@ -52,10 +73,17 @@ public class OrderController extends UserAttrSetter {
     return builder.toString();
   }
 
-  @RequestMapping(value = "getOrders", method = RequestMethod.GET)
+  @RequestMapping(value = "getUserOrders", method = RequestMethod.GET)
   public DataResponse<List<OrderVo>> findOrders(
       @ModelAttribute(Constants.HEADER_AUTH) UserDto userDto) {
     List<OrderDto> orderDtos = orderService.findOrderByUser(userDto.getUserId());
+    List<OrderVo> orderVos = CopyUtils.copyList(orderDtos, OrderVo.class);
+    return new DataResponse<>(orderVos);
+  }
+
+  @RequestMapping(value = "getTodayOrders", method = RequestMethod.GET)
+  public DataResponse<List<OrderVo>> getTodayOrders() {
+    List<OrderDto> orderDtos = orderService.findTodayOrder();
     List<OrderVo> orderVos = CopyUtils.copyList(orderDtos, OrderVo.class);
     return new DataResponse<>(orderVos);
   }
