@@ -19,7 +19,10 @@ const apis = {
   updateUser: '/user/updateUser',
   getUserInfo: '/user/getUserInfo',
   getMerchantList: '/getMerchantList',
-  getMealsByMchId: '/getMealsList'
+  getMealsByMchId: '/getMealsList',
+  submitOrder: '/submitOrder',
+  getUserOrders: '/getUserOrders',
+  getTodayOrders: '/getTodayOrders'
 }
 
 Object.keys(apis).forEach((key) => {

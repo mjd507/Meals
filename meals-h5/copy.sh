@@ -1,0 +1,1 @@
+scp -r dist mjd-centos-ali:/root/h5/

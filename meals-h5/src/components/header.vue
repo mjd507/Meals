@@ -5,21 +5,18 @@
       <button v-if="userInfo && userInfo.userName" @click="showUserSettingLayout">{{userInfo.userName}}</button>
       <button v-else @click="login">登录</button>
     </div>
-    <login-layout ref="login"></login-layout>
     <user-setting-layout ref="usersetting"></user-setting-layout>
   </div>
 </template>
 
 <script>
 import store from 'store'
-import loginLayout from '@/components/login'
 import userSettingLayout from '@/components/userInfo'
 import bus from '../modules/EventBus'
 import EventDef from '../modules/EventDef'
 
 export default {
   components: {
-    loginLayout,
     userSettingLayout
   },
   data() {
@@ -29,21 +26,18 @@ export default {
   },
   created() {
     bus.$on(EventDef.updateUserInfo, (userInfo) => {
-      this.updateHeaderUser(userInfo)
+      this.userInfo = userInfo
     })
     this.userInfo = store.get('userInfo')
   },
   methods: {
     login() {
       // 显示登录面板
-      this.$refs.login.showLoginLayout = true
+      bus.$emit(EventDef.showLoginLayout, true)
     },
     showUserSettingLayout() {
       // 显示用户信息面板
       this.$refs.usersetting.showUserSettingLayout = true
-    },
-    updateHeaderUser(userInfo) {
-      this.userInfo = userInfo
     }
   }
 }

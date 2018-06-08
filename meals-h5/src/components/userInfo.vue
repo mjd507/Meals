@@ -25,9 +25,9 @@ export default {
   data() {
     return {
       showUserSettingLayout: false,
-      departments: [{ value: '研发部' }, { value: '运营部' }],
+      departments: [{ value: '研发部' }],
       currDepartment: '研发部',
-      groups: [{ value: ' Java组' }, { value: '小程序组' }, { value: 'APP组' }],
+      groups: [{ value: 'APP组' }, { value: '小程序组' }, { value: ' Java组' }],
       currGroup: 'Java组',
       userName: ''
     }

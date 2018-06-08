@@ -10,6 +10,7 @@ import apis from './modules/Apis'
 import fetch from './modules/fetch'
 
 Vue.use(ElementUI)
+
 Vue.config.productionTip = false
 Vue.prototype.apis = apis
 Vue.prototype.fetch = fetch
@@ -22,4 +23,3 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
-

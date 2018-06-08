@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-login" v-if="showLoginLayout">
+  <div class="layout-login">
     <div class="panel">
       <div class="panel-close el-icon-close" @click="hidePanel"></div>
       <el-input class="phone" v-model="phone" type="text" value="number" placeholder="手机号"></el-input>
@@ -19,7 +19,6 @@ import EventDef from '../modules/EventDef'
 export default {
   data() {
     return {
-      showLoginLayout: false,
       phone: '',
       verifyCode: '',
       isBtnDisable: false,
@@ -92,7 +91,7 @@ export default {
       }
     },
     hidePanel() {
-      this.showLoginLayout = false
+      bus.$emit(EventDef.showLoginLayout, false)
     }
   }
 }

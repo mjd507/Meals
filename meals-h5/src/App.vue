@@ -4,12 +4,14 @@
     <router-view/>
     <!-- helper layout -->
     <m-loading v-if="showLoading" />
+    <m-login v-if="showLoginLayout" />
   </div>
 </template>
 
 <script>
 import mHeader from '@/components/header'
 import mLoading from '@/components/loading'
+import mLogin from '@/components/login'
 import bus from './modules/EventBus'
 import EventDef from './modules/EventDef'
 
@@ -17,14 +19,17 @@ export default {
   name: 'App',
   components: {
     mHeader,
-    mLoading
+    mLoading,
+    mLogin
   },
   data() {
     return {
       // 信息提示
       showMsg: false,
       // Loading 提示
-      showLoading: false
+      showLoading: false,
+      // 登录面板
+      showLoginLayout: false
     }
   },
   created() {
@@ -35,6 +40,10 @@ export default {
     // Loading 加载控制
     bus.$on(EventDef.showLoading, (status) => {
       this.showLoading = status
+    })
+    // showLoginLayout 登录面板
+    bus.$on(EventDef.showLoginLayout, (status) => {
+      this.showLoginLayout = status
     })
   },
   methods: {
