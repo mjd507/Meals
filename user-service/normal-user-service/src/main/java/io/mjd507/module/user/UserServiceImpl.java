@@ -5,6 +5,8 @@ import com.google.common.base.Strings;
 import io.mjd507.CopyUtils;
 import io.mjd507.module.login.LoginDto;
 import io.mjd507.module.login.LoginService;
+import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -62,6 +64,12 @@ public class UserServiceImpl implements UserService {
   public UserDto findUserById(String userId) {
     UserDo userDo = userServiceMapper.findUserByUserId(userId);
     return CopyUtils.copyObject(userDo, UserDto.class);
+  }
+
+  @Override
+  public List<UserDto> findUserList(List<String> userIds) {
+    List<UserDo> userList = userServiceMapper.findUserList(userIds);
+    return CopyUtils.copyList(userList, UserDto.class);
   }
 
   @Override

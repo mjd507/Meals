@@ -8,9 +8,15 @@ import io.mjd507.OrderVo;
 import io.mjd507.common.DataResponse;
 import io.mjd507.common.UserAttrSetter;
 import io.mjd507.module.login.Constants;
+import io.mjd507.module.user.UserDo;
 import io.mjd507.module.user.UserDto;
+import io.mjd507.module.user.UserService;
 import io.mjd507.order.request.OrderVoReq;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +32,9 @@ public class OrderController extends UserAttrSetter {
 
   @Autowired
   OrderService orderService;
+
+  @Autowired
+  UserService userService;
 
   @RequestMapping(value = "submitOrder", method = RequestMethod.POST)
   public DataResponse<String> submitOrder(@ModelAttribute(Constants.HEADER_AUTH) UserDto userDto,
@@ -82,9 +91,32 @@ public class OrderController extends UserAttrSetter {
   }
 
   @RequestMapping(value = "getTodayOrders", method = RequestMethod.GET)
-  public DataResponse<List<OrderVo>> getTodayOrders() {
+  public DataResponse<List<OrderTodayVo>> getTodayOrders() {
     List<OrderDto> orderDtos = orderService.findTodayOrder();
-    List<OrderVo> orderVos = CopyUtils.copyList(orderDtos, OrderVo.class);
-    return new DataResponse<>(orderVos);
+    List<String> userIds = orderDtos.stream().map((OrderDto::getUserId))
+        .collect(Collectors.toList());
+    List<OrderTodayVo> todayVos = new ArrayList<>();
+    if (userIds == null || userIds.size() == 0) {
+      return new DataResponse<>(todayVos);
+    }
+    List<UserDto> userList = userService.findUserList(userIds);
+
+    for (int i = 0; i < orderDtos.size(); i++) {
+      OrderTodayVo todayVo = new OrderTodayVo();
+      OrderDto orderDto = orderDtos.get(i);
+      UserDto userDto = userList.get(i);
+      todayVo.setId(orderDto.getId());
+      todayVo.setMchName(orderDto.getMchName());
+      todayVo.setMealName(orderDto.getMealName());
+      todayVo.setCreatedAt(orderDto.getCreatedAt());
+      //user
+      todayVo.setDepartment(userDto.getDepartment());
+      todayVo.setUserGroup(userDto.getUserGroup());
+      todayVo.setUserName(userDto.getUserName());
+      todayVo.setNickName(userDto.getNickName());
+      todayVo.setAvatar(userDto.getAvatar());
+      todayVos.add(todayVo);
+    }
+    return new DataResponse<>(todayVos);
   }
 }

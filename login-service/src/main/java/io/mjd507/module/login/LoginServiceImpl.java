@@ -75,7 +75,9 @@ public class LoginServiceImpl implements LoginService {
     }
     boolean isExpired = DateUtils.isExpired(loginDo.getExpiredAt(), 0);
     if (isExpired) {
-      return null;
+      // 自动刷新 token 时效
+      loginDo.setExpiredAt(DateUtils.getDayFromNow(30));
+      loginMapper.refreshToken(loginDo);
     }
     return CopyUtils.copyObject(loginDo, LoginDto.class);
   }

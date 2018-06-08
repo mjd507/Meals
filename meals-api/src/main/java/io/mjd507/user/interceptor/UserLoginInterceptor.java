@@ -34,11 +34,12 @@ public class UserLoginInterceptor extends HandlerInterceptorAdapter {
 
     String authorization = request.getHeader(Constants.HEADER_AUTH);
     if (authorization != null) {
-      if (!authorization.startsWith("Bearer ") && authorization.substring(7).trim().length() == 0) {
+      String[] auth = authorization.split(" ");
+      if (auth.length != 2 || !auth[0].equals("Bearer") || auth[1] == null) {
+        authFailure(response);
         return false;
       }
-      String token = authorization.split(" ")[1];
-      LoginDto loginDto = loginService.findValidByToken(token);
+      LoginDto loginDto = loginService.findValidByToken(auth[1]);
       if (loginDto != null) {
         UserDto user = userService.findUserById(loginDto.getUserId());
         request.setAttribute(Constants.HEADER_AUTH, user);

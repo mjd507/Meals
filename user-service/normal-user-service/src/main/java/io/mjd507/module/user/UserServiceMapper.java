@@ -1,5 +1,7 @@
 package io.mjd507.module.user;
 
+import java.util.List;
+import java.util.Map;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -83,4 +85,25 @@ public interface UserServiceMapper {
   @Delete({"DELETE FROM tb_user WHERE user_id = #{userId}"})
   int deleteUserByUserId(String userId);
 
+  @Select("<script>"
+      + "SELECT `id`,`user_id`,`user_name`,`nick_name`,`phone`,`avatar`,`department`,`user_group`,`user_role`,`created_at`,`updated_at` "
+      + "FROM tb_user WHERE `user_id` IN "
+      + "<foreach item='item' index='index' collection='list' open='(' separator=',' close=')'>"
+      + "#{item}"
+      + "</foreach>"
+      + "</script>")
+  @Results(value = {
+      @Result(column = "id", property = "id"),
+      @Result(column = "user_id", property = "userId"),
+      @Result(column = "user_name", property = "userName"),
+      @Result(column = "nick_name", property = "nickName"),
+      @Result(column = "phone", property = "phone"),
+      @Result(column = "avatar", property = "avatar"),
+      @Result(column = "department", property = "department"),
+      @Result(column = "user_group", property = "userGroup"),
+      @Result(column = "user_role", property = "userRole"),
+      @Result(column = "created_at", property = "createdAt"),
+      @Result(column = "updated_at", property = "updatedAt"),
+  })
+  List<UserDo> findUserList(List<String> userIds);
 }
