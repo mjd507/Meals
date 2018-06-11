@@ -18,6 +18,7 @@
     <module>order-service</module>
     <module>sms-service</module>
     <module>qiniu-service</module>
+    <module>email-service</module>
   </modules>
 
 	<name>meals</name>
