@@ -22,7 +22,11 @@
       </div>
       <div class="order-list">
         <div class="order-item" v-for="item in todayOrderList" :key="item.id">
-          {{item.showName}} - {{item.date}}
+          <div class="item-groupname">{{item.userGroup}}</div>
+          <div class="item-username">{{item.userName}}</div>
+          <div class="item-mealname">{{item.mealName}}</div>
+          <div class="item-space"></div>
+          <div class="item-time">{{item.date}}</div>
         </div>
       </div>
     </div>
@@ -72,15 +76,10 @@ export default {
             const sec = date.getSeconds().toString()
             const showSec = sec.length > 1 ? sec : `0${sec}`
             item.date = `${showHour}:${showMin}:${showSec}`
-            const { userGroup, userName, mealName } = item
-            item.showName = `${userGroup || ''} ${userName || ''} ${mealName ||
-              ''}`
+            item.userGroup = item.userGroup || '其它'
             return item
           })
-          // for (let i = 0; i < 10; i++) {
-          //   list = list.concat(list)
-          // }
-          this.todayOrderList = list
+          this.todayOrderList = list.reverse()
         }
       })
     },
@@ -212,7 +211,7 @@ export default {
       border: 1px solid #f56c6c;
       border-radius: 4px;
       padding: 4px 10px;
-      margin-left: 1.2rem;
+      margin-left: 2rem;
     }
     .refresh {
       font-size: 0.8rem;
@@ -222,7 +221,7 @@ export default {
       border: 1px solid #f56c6c;
       border-radius: 4px;
       padding: 4px 10px;
-      margin-left: 1.2rem;
+      margin-left: 2rem;
     }
   }
   .order-list {
@@ -233,6 +232,24 @@ export default {
       color: #909399;
       font-size: 1rem;
       padding-top: 10px;
+      display: flex;
+      .item-groupname {
+        min-width: 4rem;
+        text-align: center;
+      }
+      .item-username {
+        width: 8rem;
+        text-align: center;
+      }
+      .item-mealname {
+        min-width: 2rem;
+      }
+      .item-space {
+        min-width: 2rem;
+      }
+      .item-time {
+        min-width: 4rem;
+      }
     }
   }
 }
