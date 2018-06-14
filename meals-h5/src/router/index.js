@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import MchList from '@/pages/mchList'
 import MealList from '@/pages/mealList'
+import Cache from '@/pages/cache'
 
 Vue.use(Router)
 
@@ -22,6 +23,11 @@ export default new Router({
       path: '/meals',
       name: 'meals',
       component: MealList
+    },
+    {
+      path: '/cache',
+      name: 'cache',
+      component: Cache
     }
   ]
 })

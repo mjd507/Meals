@@ -22,7 +22,8 @@ const apis = {
   getMealsByMchId: '/getMealsList',
   submitOrder: '/submitOrder',
   getUserOrders: '/getUserOrders',
-  getTodayOrders: '/getTodayOrders'
+  getTodayOrders: '/getTodayOrders',
+  viewCache: '/cache/stats/all'
 }
 
 Object.keys(apis).forEach((key) => {
