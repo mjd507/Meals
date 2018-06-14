@@ -42,6 +42,7 @@
 		<lombok.version>1.16.20</lombok.version>
 		<slf4j-api>1.7.25</slf4j-api>
 		<logback-classic>1.2.3</logback-classic>
+		<guava-version>RELEASE</guava-version>
 	</properties>
 
 	<dependencyManagement>
@@ -89,6 +90,11 @@
 				<groupId>ch.qos.logback</groupId>
 				<artifactId>logback-classic</artifactId>
 				<version>${logback-classic}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>${guava-version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.squareup.okhttp3</groupId>

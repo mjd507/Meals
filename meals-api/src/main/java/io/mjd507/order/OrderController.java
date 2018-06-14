@@ -1,6 +1,7 @@
 package io.mjd507.order;
 
 import io.mjd507.CopyUtils;
+import io.mjd507.DateUtils;
 import io.mjd507.OrderDo;
 import io.mjd507.OrderDto;
 import io.mjd507.OrderService;
@@ -8,14 +9,11 @@ import io.mjd507.OrderVo;
 import io.mjd507.common.DataResponse;
 import io.mjd507.common.UserAttrSetter;
 import io.mjd507.module.login.Constants;
-import io.mjd507.module.user.UserDo;
 import io.mjd507.module.user.UserDto;
 import io.mjd507.module.user.UserService;
 import io.mjd507.order.request.OrderVoReq;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -39,6 +37,11 @@ public class OrderController extends UserAttrSetter {
   @RequestMapping(value = "submitOrder", method = RequestMethod.POST)
   public DataResponse<String> submitOrder(@ModelAttribute(Constants.HEADER_AUTH) UserDto userDto,
       @RequestBody OrderVoReq orderVoReq) {
+    if (DateUtils.isOver3Clock()) {
+      DataResponse<String> response = new DataResponse<>();
+      response.setFailure("订餐时间已截止");
+      return response;
+    }
     // 限制一个用户一天只下一单
     if (hasSubmit(userDto.getUserId())) {
       DataResponse<String> response = new DataResponse<>();
@@ -104,7 +107,9 @@ public class OrderController extends UserAttrSetter {
     for (int i = 0; i < orderDtos.size(); i++) {
       OrderTodayVo todayVo = new OrderTodayVo();
       OrderDto orderDto = orderDtos.get(i);
-      UserDto userDto = userList.get(i);
+      UserDto userDto = userList.stream()
+          .filter(user -> user.getUserId().equals(orderDto.getUserId()))
+          .collect(Collectors.toList()).get(0);
       todayVo.setId(orderDto.getId());
       todayVo.setMchName(orderDto.getMchName());
       todayVo.setMealName(orderDto.getMealName());

@@ -6,7 +6,6 @@ import io.mjd507.CopyUtils;
 import io.mjd507.module.login.LoginDto;
 import io.mjd507.module.login.LoginService;
 import java.util.List;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +21,9 @@ public class UserServiceImpl implements UserService {
   @Autowired
   UserServiceMapper userServiceMapper;
 
+  @Autowired
+  UserCache userCache;
+
   // 登录服务
   public UserVo loginByPhone(String phone, String verifyCode) {
     LoginDto loginDto = loginService.loginByPhone(phone, verifyCode);
@@ -33,13 +35,13 @@ public class UserServiceImpl implements UserService {
 
   private UserVo getOrCreateUser(LoginDto loginDto) {
     Preconditions.checkNotNull(loginDto);
-    UserDo userDo = userServiceMapper.findUserByUserId(loginDto.getUserId());
-    if (userDo != null) { //老用户
-      UserVo userVo = CopyUtils.copyObject(userDo, UserVo.class);
+    UserDto userDto = findUserById(loginDto.getUserId());
+    if (userDto != null) { //老用户
+      UserVo userVo = CopyUtils.copyObject(userDto, UserVo.class);
       userVo.setExtra(loginDto.getToken());
       return userVo;
     } else {
-      userDo = new UserDo();
+      UserDo userDo = new UserDo();
       userDo.setUserId(loginDto.getUserId());
       if (loginDto.getPhone() != null) {
         userDo.setPhone(loginDto.getPhone());
@@ -62,7 +64,8 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserDto findUserById(String userId) {
-    UserDo userDo = userServiceMapper.findUserByUserId(userId);
+    // UserDo userDo = userServiceMapper.findUserByUserId(userId);
+    UserDo userDo = userCache.getCacheValue(userId);
     return CopyUtils.copyObject(userDo, UserDto.class);
   }
 
@@ -74,12 +77,20 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public int updateUserById(UserDo userDo) {
-    return userServiceMapper.updateBySelective(userDo);
+    int count = userServiceMapper.updateBySelective(userDo);
+    if (count > 0) {
+      userCache.refreshCacheValue(userDo.getUserId());
+    }
+    return count;
   }
 
   @Override
   public int deleteUserById(String userId) {
-    return userServiceMapper.deleteUserByUserId(userId);
+    int count = userServiceMapper.deleteUserByUserId(userId);
+    if (count > 0) {
+      userCache.refreshCacheValue(userId);
+    }
+    return count;
   }
 
 }

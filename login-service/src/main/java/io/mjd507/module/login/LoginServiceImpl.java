@@ -21,6 +21,9 @@ public class LoginServiceImpl implements LoginService {
   @Autowired
   LoginServiceMapper loginMapper;
 
+  @Autowired
+  TokenCache tokenCache;
+
   @Override
   public LoginDto loginByPhone(String phone, String verifyCode) {
     boolean vCodeValid = smsService.isVCodeValid(phone, verifyCode);
@@ -69,7 +72,8 @@ public class LoginServiceImpl implements LoginService {
 
   @Override
   public LoginDto findValidByToken(String token) {
-    LoginDo loginDo = loginMapper.findByToken(token);
+    LoginDo loginDo = tokenCache.getCacheValue(token);
+    // LoginDo loginDo = loginMapper.findByToken(token);
     if (loginDo == null) {
       return null;
     }
