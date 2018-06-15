@@ -17,7 +17,7 @@ public abstract class AbsLoadingCache<K, V> {
 
   private static final Logger logger = LoggerFactory.getLogger(AbsLoadingCache.class);
   private int maxSize = 1000;
-  private int expireAfterWriteDuration = 30;
+  private int expireAfterAccessDuration = 30;
   private TimeUnit timeUnit = TimeUnit.MINUTES;
 
   //Cache初始化或被重置的时间
@@ -35,7 +35,7 @@ public abstract class AbsLoadingCache<K, V> {
         if (loadingCache == null) {
           loadingCache = CacheBuilder.newBuilder()
               .maximumSize(maxSize) // 1000 条缓存
-              .expireAfterWrite(expireAfterWriteDuration, timeUnit) //数据缓存时间
+              .expireAfterAccess(expireAfterAccessDuration, timeUnit) //数据缓存时间
               .recordStats() // 启用统计
               .removalListener(removalNotification -> {
 //                logger.warn("Guava LocalCache Removed Key: {}, Value: {}, Cause:{}",
@@ -91,24 +91,28 @@ public abstract class AbsLoadingCache<K, V> {
     return resetTime;
   }
 
-  public void setResetTime(Date resetTime) {
-    this.resetTime = resetTime;
-  }
-
   public int getMaximumSize() {
     return maxSize;
   }
 
-  public int getExpireAfterWriteDuration() {
-    return expireAfterWriteDuration;
+  public int getExpireAfterAccessDuration() {
+    return expireAfterAccessDuration;
+  }
+
+  public TimeUnit getTimeUnit() {
+    return timeUnit;
   }
 
   protected void setMaximumSize(int maximumSize) {
     this.maxSize = maximumSize;
   }
 
-  protected void setExpireAfterWriteDuration(int expireAfterWriteDuration) {
-    this.expireAfterWriteDuration = expireAfterWriteDuration;
+  protected void setExpireAfterAccessDuration(int expireAfterAccessDuration) {
+    this.expireAfterAccessDuration = expireAfterAccessDuration;
+  }
+
+  public void setResetTime(Date resetTime) {
+    this.resetTime = resetTime;
   }
 
   protected void setTimeUnit(TimeUnit timeUnit) {

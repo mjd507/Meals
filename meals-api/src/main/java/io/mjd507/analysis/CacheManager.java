@@ -76,9 +76,10 @@ public class CacheManager {
     NumberFormat percent = NumberFormat.getPercentInstance(); // 建立百分比格式化用
     percent.setMaximumFractionDigits(1); // 百分比小数点后的位数
     map.put("cacheName", cacheName);
-    map.put("size", cache.getLoadingCache().size());
+    map.put("cacheSize", cache.getLoadingCache().size());
     map.put("maximumSize", cache.getMaximumSize());
-    map.put("survivalDuration", cache.getExpireAfterWriteDuration());
+    map.put("cacheDuration", cache.getExpireAfterAccessDuration());
+    map.put("cacheDurationTimeUnit", cache.getTimeUnit());
     map.put("hitCount", cs.hitCount());
     map.put("hitRate", percent.format(cs.hitRate()));
     map.put("missRate", percent.format(cs.missRate()));

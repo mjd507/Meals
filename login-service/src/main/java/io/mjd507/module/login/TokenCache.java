@@ -13,8 +13,8 @@ public class TokenCache extends AbsLoadingCache<String, LoginDo> {
 
   public TokenCache() {
     setMaximumSize(1000);
-    setExpireAfterWriteDuration(30);
-    setTimeUnit(TimeUnit.MINUTES);
+    setExpireAfterAccessDuration(2);
+    setTimeUnit(TimeUnit.DAYS);
   }
 
   @Autowired

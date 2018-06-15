@@ -2,9 +2,10 @@
   <div class="wrapper">
     <div class="cacheItem" v-for="item in cacheList" :key="item.cacheName">
       <div class="item-name">名 称 ：{{item.cacheName}}</div>
-      <div class="item-size">数量 ：{{item.size}} / {{item.maximumSize}}</div>
+      <div class="item-size">数量 ：{{item.cacheSize}} / {{item.maximumSize}}</div>
       <div class="high-size">最大数量： {{item.highestSize}} </div>
-      <div class="high-time">最大时间： {{item.highestTime}}</div>
+      <div class="high-time">最大数量发生时间： {{item.highestTime}}</div>
+      <div class="high-time">缓存时间 ：{{item.cacheDuration}} / {{item.cacheDurationTimeUnit}}</div>
       <div class="item-hit">请求命中数 ： {{item.hitCount}}</div>
       <div class="item-succ-excp">加载成功/异常数： {{item.loadSuccessCount}} / {{item.loadExceptionCount}}</div>
     </div>

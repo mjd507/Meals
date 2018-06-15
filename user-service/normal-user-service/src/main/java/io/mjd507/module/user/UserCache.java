@@ -12,9 +12,9 @@ import org.springframework.stereotype.Component;
 public class UserCache extends AbsLoadingCache<String, UserDo> {
 
   public UserCache() {
-    setMaximumSize(800);
-    setExpireAfterWriteDuration(30);
-    setTimeUnit(TimeUnit.MINUTES);
+    setMaximumSize(500);
+    setExpireAfterAccessDuration(2);
+    setTimeUnit(TimeUnit.DAYS);
   }
 
   @Autowired
