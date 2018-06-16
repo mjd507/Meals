@@ -1,12 +1,12 @@
 package io.mjd507;
 
-import java.util.Date;
 import java.util.List;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 /**
  * Created by mjd on 2018/4/26 20:39
@@ -56,4 +56,7 @@ public interface OrderMapper {
       @Result(column = "updated_at", property = "updatedAt"),
   })
   List<OrderDo> findTodayOrder();
+
+  @Update({"DELETE FROM tb_order WHERE user_id = #{userId} and to_days(`created_at`) = to_days(now())"})
+  int cancelOrder(String userId);
 }

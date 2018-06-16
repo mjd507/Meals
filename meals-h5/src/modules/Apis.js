@@ -23,6 +23,7 @@ const apis = {
   submitOrder: '/submitOrder',
   getUserOrders: '/getUserOrders',
   getTodayOrders: '/getTodayOrders',
+  cancelOrder: '/cancelOrder',
   viewCache: '/cache/stats/all'
 }
 

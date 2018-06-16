@@ -9,16 +9,18 @@
           <div class="mch-location">{{mch.mchLocation}}</div>
         </div>
       </div>
-      <div class="btn-choose">
+      <div class="btn-choose" v-if="!hasOrder">
         <div class="no-meat" @click="submit(0)">+1 素</div>
         <div class="meat" @click="submit(1)">+1 荤</div>
       </div>
+      <div class="btn-cancel" @click="cancel" v-if="hasOrder">取消今日订餐</div>
     </div>
     <div class="right">
       <div class="order-title">
         <div class="title">今日订餐</div>
         <div class="refresh" @click="refresh">刷新列表</div>
         <div class="statistical" @click="statistical">统计</div>
+        <div class="history" @click="history">我的订餐历史</div>
       </div>
       <div class="order-list">
         <div class="order-item" v-for="item in todayOrderList" :key="item.id">
@@ -31,21 +33,26 @@
       </div>
     </div>
     <pop-dialog ref="popDialog" />
+    <history-order ref="historyOrder" />
   </div>
 </template>
 <script>
 import bus from '../modules/EventBus'
 import EventDef from '../modules/EventDef'
 import PopDialog from './popDialog'
+import HistoryOrder from './historyOrder'
+import Utils from '../modules/utils'
 
 export default {
   components: {
-    PopDialog
+    PopDialog,
+    HistoryOrder
   },
   data() {
     return {
       mch: '',
-      todayOrderList: []
+      todayOrderList: [],
+      hasOrder: false
     }
   },
   created() {
@@ -68,14 +75,7 @@ export default {
       }).then((res) => {
         if (res && res.length) {
           const list = res.map((item) => {
-            const date = new Date(item.createdAt)
-            const hour = date.getHours().toString()
-            const showHour = hour.length > 1 ? hour : `0${hour}`
-            const min = date.getMinutes().toString()
-            const showMin = min.length > 1 ? min : `0${min}`
-            const sec = date.getSeconds().toString()
-            const showSec = sec.length > 1 ? sec : `0${sec}`
-            item.date = `${showHour}:${showMin}:${showSec}`
+            item.date = Utils.formatDateTime2(item.createdAt)
             item.userGroup = item.userGroup || '其它'
             return item
           })
@@ -101,12 +101,36 @@ export default {
             text: res,
             type: EventDef.MsgType.INFO
           })
+          this.hasOrder = res === '提交成功'
         }
         this.refresh()
       })
     },
+    cancel() {
+      this.fetch({
+        url: this.apis.cancelOrder,
+        method: 'POST'
+      }).then((res) => {
+        if (res) {
+          bus.$emit(EventDef.showMsg, {
+            text: res,
+            type: EventDef.MsgType.INFO
+          })
+          this.hasOrder = false
+        }
+      })
+    },
     statistical() {
       this.$refs.popDialog.handleOrderList(this.todayOrderList)
+    },
+    history() {
+      this.fetch({
+        url: this.apis.getUserOrders
+      }).then((res) => {
+        if (res && res.length) {
+          this.$refs.historyOrder.showHistory(res)
+        }
+      })
     },
     toMeals(mchId) {
       this.$router.push({
@@ -164,7 +188,18 @@ export default {
     text-align: right;
   }
 }
-
+.btn-cancel {
+  width: 20rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 2rem;
+  border-radius: 4px;
+  background: #f56c6c;
+  color: #fff;
+  padding: 6px 10px;
+  box-sizing: border-box;
+}
 .btn-choose {
   width: 20rem;
   display: flex;
@@ -212,6 +247,16 @@ export default {
       border-radius: 4px;
       padding: 4px 10px;
       margin-left: 2rem;
+    }
+    .history {
+      font-size: 0.8rem;
+      background: #ecf5ff;
+      color: #409eff;
+      text-align: center;
+      border: 1px solid #ecf5ff;
+      border-radius: 4px;
+      padding: 4px 10px;
+      margin-left: 6rem;
     }
     .refresh {
       font-size: 0.8rem;

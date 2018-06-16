@@ -51,4 +51,10 @@ public class DateUtils {
     int minute = calendar.get(Calendar.MINUTE);
     return hour >= 15 && minute >= 1;
   }
+
+  public static boolean isWorkDay() {
+    Calendar calendar = Calendar.getInstance();
+    int day = calendar.get(Calendar.DAY_OF_WEEK);
+    return day != Calendar.SATURDAY && day != Calendar.SUNDAY;
+  }
 }

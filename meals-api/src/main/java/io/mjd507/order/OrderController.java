@@ -1,7 +1,7 @@
 package io.mjd507.order;
 
+import com.google.common.base.Joiner;
 import io.mjd507.CopyUtils;
-import io.mjd507.DateUtils;
 import io.mjd507.OrderDo;
 import io.mjd507.OrderDto;
 import io.mjd507.OrderService;
@@ -37,52 +37,19 @@ public class OrderController extends UserAttrSetter {
   @RequestMapping(value = "submitOrder", method = RequestMethod.POST)
   public DataResponse<String> submitOrder(@ModelAttribute(Constants.HEADER_AUTH) UserDto userDto,
       @RequestBody OrderVoReq orderVoReq) {
-    if (DateUtils.isOver3Clock()) {
-      DataResponse<String> response = new DataResponse<>();
-      response.setFailure("订餐时间已截止");
-      return response;
-    }
-    // 限制一个用户一天只下一单
-    if (hasSubmit(userDto.getUserId())) {
-      DataResponse<String> response = new DataResponse<>();
-      response.setFailure("请勿重复订餐");
-      return response;
-    }
     OrderDo orderDo = new OrderDo();
     orderDo.setUserId(userDto.getUserId());
     orderDo.setMchId(orderVoReq.getMchId());
     orderDo.setMchName(orderVoReq.getMchName());
-    orderDo.setMealName(listToStr(orderVoReq.getMealName()));
-    int count = orderService.submitOrder(orderDo);
-    return new DataResponse<>(count > 0 ? "提交成功" : "提交失败");
+    orderDo.setMealName("[" + Joiner.on(",").join(orderVoReq.getMealName()) + "]");
+    String result = orderService.submitOrder(orderDo);
+    return new DataResponse<>(result);
   }
 
-  private boolean hasSubmit(String userId) {
-    List<OrderDto> userOrders = orderService.findOrderByUser(userId);
-    List<OrderDto> todayOrders = orderService.findTodayOrder();
-    if (userOrders == null || userOrders.size() == 0) {
-      return false;
-    }
-    OrderDto userLastOrder = userOrders.get(userOrders.size() - 1);
-    for (OrderDto today : todayOrders) {
-      if (userLastOrder.getId().equals(today.getId())) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  private String listToStr(List<String> list) {
-    StringBuilder builder = new StringBuilder();
-    builder.append("[");
-    list.forEach((item) -> {
-      builder.append(item).append(",");
-    });
-    if (list.size() != 0) {
-      builder.setLength(builder.length() - 1);
-    }
-    builder.append("]");
-    return builder.toString();
+  @RequestMapping(value = "cancelOrder", method = RequestMethod.POST)
+  public DataResponse<String> cancelOrder(@ModelAttribute(Constants.HEADER_AUTH) UserDto userDto) {
+    String result = orderService.cancelOrder(userDto.getUserId());
+    return new DataResponse<>(result);
   }
 
   @RequestMapping(value = "getUserOrders", method = RequestMethod.GET)
@@ -104,9 +71,8 @@ public class OrderController extends UserAttrSetter {
     }
     List<UserDto> userList = userService.findUserList(userIds);
 
-    for (int i = 0; i < orderDtos.size(); i++) {
+    for (OrderDto orderDto : orderDtos) {
       OrderTodayVo todayVo = new OrderTodayVo();
-      OrderDto orderDto = orderDtos.get(i);
       UserDto userDto = userList.stream()
           .filter(user -> user.getUserId().equals(orderDto.getUserId()))
           .collect(Collectors.toList()).get(0);
