@@ -82,5 +82,6 @@ export default {
   margin: auto;
   background: #fff;
   position: relative;
+  min-width: 1000px;
 }
 </style>

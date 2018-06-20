@@ -35,13 +35,15 @@ public class UserServiceImpl implements UserService {
 
   private UserVo getOrCreateUser(LoginDto loginDto) {
     Preconditions.checkNotNull(loginDto);
-    UserDto userDto = findUserById(loginDto.getUserId());
-    if (userDto != null) { //老用户
-      UserVo userVo = CopyUtils.copyObject(userDto, UserVo.class);
+    // login，走库，不走缓存取用户
+    UserDo userDo = userServiceMapper.findUserByUserId(loginDto.getUserId());
+    // UserDto userDto = findUserById(loginDto.getUserId());
+    if (userDo != null) { //老用户
+      UserVo userVo = CopyUtils.copyObject(userDo, UserVo.class);
       userVo.setExtra(loginDto.getToken());
       return userVo;
     } else {
-      UserDo userDo = new UserDo();
+      userDo = new UserDo();
       userDo.setUserId(loginDto.getUserId());
       if (loginDto.getPhone() != null) {
         userDo.setPhone(loginDto.getPhone());

@@ -31,7 +31,7 @@ public class SmsController {
     // 限制 ip 访问
     String realIp = IPUtils.getRealIp(request);
     if (!realIp.equals("116.226.68.230")) {
-      logger.info("访问者 ip 为：{}", realIp);
+      logger.warn("访问者 ip 为：{}", realIp);
       result = "ip 不在服务区";
     } else {
       result = smsService.sendSms(phone);
