@@ -1,6 +1,7 @@
 package io.mjd507.module.sms;
 
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import io.mjd507.DateUtils;
 import io.mjd507.http.HttpRequest;
 import io.mjd507.http.HttpUtils;
@@ -98,8 +99,10 @@ public class SmsService {
    * true 验证通过
    */
   public boolean isVCodeValid(String phone, String code) {
+    Preconditions.checkArgument(!Strings.isNullOrEmpty(phone), "phone 不能为空");
+    Preconditions.checkArgument(!Strings.isNullOrEmpty(code), "verifyCode 不能为空");
     VCodeDo codeDo = smsServiceMapper.findByPhone(phone);
-    Preconditions.checkNotNull(codeDo, "invalid phone");
+    Preconditions.checkNotNull(codeDo);
     Date expireDate = codeDo.getExpiredAt();
     boolean isExpired = DateUtils.isExpiredNow(expireDate);
     if (isExpired) {

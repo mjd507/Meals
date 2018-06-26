@@ -1,5 +1,6 @@
 package io.mjd507.user.controller;
 
+import io.mjd507.common.ConfigProperties;
 import io.mjd507.common.DataResponse;
 import io.mjd507.common.IPUtils;
 import io.mjd507.module.sms.SmsService;
@@ -30,7 +31,7 @@ public class SmsController {
     String result;
     // 限制 ip 访问
     String realIp = IPUtils.getRealIp(request);
-    if (!realIp.equals("116.226.68.230")) {
+    if (!ConfigProperties.IpWhiteList.contains(realIp)) {
       logger.warn("访问者 ip 为：{}", realIp);
       result = "ip 不在服务区";
     } else {

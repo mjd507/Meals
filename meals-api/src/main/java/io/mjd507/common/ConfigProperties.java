@@ -10,20 +10,23 @@ import org.springframework.stereotype.Component;
 /**
  * Created by mjd on 2018/4/27 09:34
  */
-@Getter
-@Setter
-@ToString
 @Component
 public class ConfigProperties {
 
-  @Value("${merchant.url}")
-  public String MerchantUrlTemp;
+  @Value("${mch_host}")
+  public String mchHost;
+
+  @Value("${ip_white_list}")
+  public String ipWhiteList;
 
   public static String MerchantUrl;
 
+  public static String IpWhiteList;
+
   @PostConstruct
   public void init() {
-    MerchantUrl = MerchantUrlTemp;
+    MerchantUrl = mchHost;
+    IpWhiteList = ipWhiteList;
   }
 
 }
