@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <div class="title">订餐系统</div>
+    <div class="title">途虎订餐系统</div>
     <div class="right">
       <button v-if="userInfo && userInfo.userName" @click="showUserSettingLayout">{{userInfo.userName}}</button>
       <button v-else @click="login">登录</button>

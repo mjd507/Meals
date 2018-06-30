@@ -2,15 +2,15 @@
   <div class="layout-user-setting" v-if="showUserSettingLayout">
     <div class="panel">
       <div class="panel-close el-icon-close" @click="hidePanel"></div>
-      <el-select class="department" v-model="currDepartment" placeholder="选择部门">
+      <!-- <el-select class="department" v-model="currDepartment" placeholder="选择部门">
         <el-option v-for="item in departments" :key="item.value" :value="item.value">
         </el-option>
-      </el-select>
+      </el-select> -->
       <el-select class="group" v-model="currGroup" placeholder="选择组别">
         <el-option v-for="item in groups" :key="item.value" :value="item.value">
         </el-option>
       </el-select>
-      <el-input class="userName" v-model="userName" type="text" placeholder="输入用户名"></el-input>
+      <el-input class="userName" v-model="userName" type="text" placeholder="输入姓名"></el-input>
       <el-button class="btn-login" type="danger" @click="confirm">确定</el-button>
     </div>
   </div>
@@ -27,8 +27,13 @@ export default {
       showUserSettingLayout: false,
       departments: [{ value: '研发部' }],
       currDepartment: '研发部',
-      groups: [{ value: '金融研发组' }, { value: '马牌sass组' }],
-      currGroup: 'Java组',
+      groups: [
+        { value: '大前端组' },
+        { value: '业务系统组' },
+        { value: '金融研发组' },
+        { value: '马牌sass组' }
+      ],
+      currGroup: '',
       userName: ''
     }
   },
