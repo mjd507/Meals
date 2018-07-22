@@ -6,6 +6,7 @@ import io.mjd507.OrderDo;
 import io.mjd507.OrderDto;
 import io.mjd507.OrderService;
 import io.mjd507.OrderVo;
+import io.mjd507.OrderTodayVo;
 import io.mjd507.common.DataResponse;
 import io.mjd507.common.UserAttrSetter;
 import io.mjd507.module.login.Constants;
@@ -62,32 +63,40 @@ public class OrderController extends UserAttrSetter {
 
   @RequestMapping(value = "getTodayOrders", method = RequestMethod.GET)
   public DataResponse<List<OrderTodayVo>> getTodayOrders() {
-    List<OrderDto> orderDtos = orderService.findTodayOrder();
-    List<String> userIds = orderDtos.stream().map((OrderDto::getUserId))
-        .collect(Collectors.toList());
-    List<OrderTodayVo> todayVos = new ArrayList<>();
-    if (userIds == null || userIds.size() == 0) {
-      return new DataResponse<>(todayVos);
-    }
-    List<UserDto> userList = userService.findUserList(userIds);
-
-    for (OrderDto orderDto : orderDtos) {
-      OrderTodayVo todayVo = new OrderTodayVo();
-      UserDto userDto = userList.stream()
-          .filter(user -> user.getUserId().equals(orderDto.getUserId()))
-          .collect(Collectors.toList()).get(0);
-      todayVo.setId(orderDto.getId());
-      todayVo.setMchName(orderDto.getMchName());
-      todayVo.setMealName(orderDto.getMealName());
-      todayVo.setCreatedAt(orderDto.getCreatedAt());
-      //user
-      todayVo.setDepartment(userDto.getDepartment());
-      todayVo.setUserGroup(userDto.getUserGroup());
-      todayVo.setUserName(userDto.getUserName());
-      todayVo.setNickName(userDto.getNickName());
-      todayVo.setAvatar(userDto.getAvatar());
-      todayVos.add(todayVo);
-    }
-    return new DataResponse<>(todayVos);
+//    List<OrderDto> orderDtos = orderService.findTodayOrder();
+//    List<String> userIds = orderDtos.stream().map((OrderDto::getUserId))
+//        .collect(Collectors.toList());
+//    List<OrderTodayVo> todayVos = new ArrayList<>();
+//    if (userIds == null || userIds.size() == 0) {
+//      return new DataResponse<>(todayVos);
+//    }
+//    List<UserDto> userList = userService.findUserList(userIds);
+//
+//    for (OrderDto orderDto : orderDtos) {
+//      OrderTodayVo todayVo = new OrderTodayVo();
+//      UserDto userDto = userList.stream()
+//          .filter(user -> user.getUserId().equals(orderDto.getUserId()))
+//          .collect(Collectors.toList()).get(0);
+//      todayVo.setId(orderDto.getId());
+//      todayVo.setMchName(orderDto.getMchName());
+//      todayVo.setMealName(orderDto.getMealName());
+//      todayVo.setCreatedAt(orderDto.getCreatedAt());
+//      //user
+//      todayVo.setDepartment(userDto.getDepartment());
+//      todayVo.setUserGroup(userDto.getUserGroup());
+//      todayVo.setUserName(userDto.getUserName());
+//      todayVo.setNickName(userDto.getNickName());
+//      todayVo.setAvatar(userDto.getAvatar());
+//      todayVos.add(todayVo);
+//    }
+//    return new DataResponse<>(todayVos);
+    return this.getTodayOrderWithUser();
   }
+
+  @RequestMapping(value = "getTodayOrdersWithUser", method = RequestMethod.GET)
+  public DataResponse<List<OrderTodayVo>> getTodayOrderWithUser() {
+    List<OrderTodayVo> orderWithUser = orderService.findTodayOrderWithUser();
+    return new DataResponse<>(orderWithUser);
+  }
+
 }

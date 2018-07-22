@@ -57,6 +57,18 @@ public interface OrderMapper {
   })
   List<OrderDo> findTodayOrder();
 
+  @Select({"SELECT o.`id`, u.`user_group`, u.`user_name`, o.`meal_name`, o.`mch_name`, o.`created_at` "
+      + "FROM tb_order o inner join tb_user u on o.`user_id` = u.`user_id` WHERE to_days(o.`created_at`) = to_days(now())"})
+  @Results({
+      @Result(column = "id", property = "id"),
+      @Result(column = "user_group", property = "userGroup"),
+      @Result(column = "user_name", property = "userName"),
+      @Result(column = "meal_name", property = "mealName"),
+      @Result(column = "mch_name", property = "mchName"),
+      @Result(column = "created_at", property = "createdAt"),
+  })
+  List<OrderTodayVo> findTodayOrderWithUser();
+
   @Update({"DELETE FROM tb_order WHERE user_id = #{userId} and to_days(`created_at`) = to_days(now())"})
   int cancelOrder(String userId);
 }

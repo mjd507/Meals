@@ -53,6 +53,10 @@ public class OrderService {
     return CopyUtils.copyList(orderDoList, OrderDto.class);
   }
 
+  public List<OrderTodayVo> findTodayOrderWithUser() {
+    return orderMapper.findTodayOrderWithUser();
+  }
+
   public String cancelOrder(String userId) {
     int count = orderMapper.cancelOrder(userId);
     return count > 0 ? "取消成功" : "取消失败";

@@ -1,4 +1,4 @@
-package io.mjd507.order;
+package io.mjd507;
 
 import java.util.Date;
 import lombok.Data;
@@ -21,11 +21,11 @@ public class OrderTodayVo {
 
   private String userName;
 
-  private String nickName;
-
-  private String avatar;
-
-  private String department;
+//  private String nickName;
+//
+//  private String avatar;
+//
+//  private String department;
 
   private String userGroup;
 
